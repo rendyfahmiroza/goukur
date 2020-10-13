@@ -261,6 +261,28 @@ class Builder {
     }
 
     /**
+     * Add an HTTP Authorization header to the request
+     *
+     * @param   string $token       The authorization token that is to be added to the request
+     * @return Builder
+     */
+    public function withAuthorization($token)
+    {
+        return $this->withHeader( 'Authorization: ' . $token );
+    }
+
+    /**
+     * Add a HTTP bearer authorization header to the request
+     *
+     * @param   string $bearer      The bearer token that is to be added to the request
+     * @return Builder
+     */
+    public function withBearer($bearer)
+    {
+        return $this->withAuthorization(  'Bearer '. $bearer );
+    }
+
+    /**
      * Add a content type HTTP header to the request
      *
      * @param   string $contentType    The content type of the file you would like to download
@@ -399,6 +421,7 @@ class Builder {
       */
      public function download($fileName)
      {
+         $this->appendDataToURL();
          $this->packageOptions[ 'saveFile' ] = $fileName;
 
          return $this->send();
@@ -419,7 +442,7 @@ class Builder {
         }
 
         if( $this->packageOptions[ 'asJsonRequest' ] ) {
-            $parameters = json_encode($parameters);
+            $parameters = \json_encode($parameters);
         }
 
         $this->curlOptions[ 'POSTFIELDS' ] = $parameters;
@@ -474,7 +497,7 @@ class Builder {
      */
     public function delete()
     {
-        $this->appendDataToURL();
+        $this->setPostParameters();
 
         return $this->withOption('CUSTOMREQUEST', 'DELETE')
             ->send();
@@ -556,7 +579,7 @@ class Builder {
             }
         }, array_filter(array_map('trim', explode("\r\n", $headerString)))));
 
-        $results = [];
+        $results = array();
 
         foreach( $headers as $values ) {
             if( !is_array($values) ) {
@@ -626,7 +649,7 @@ class Builder {
         foreach( $this->curlOptions as $key => $value ) {
             $arrayKey = constant( 'CURLOPT_' . $key );
 
-            if( !$this->packageOptions[ 'containsFile' ] && $key == 'POSTFIELDS' && is_array( $value ) ) {
+            if( !$this->packageOptions[ 'containsFile' ] && $key === 'POSTFIELDS' && is_array( $value ) ) {
                 $results[ $arrayKey ] = http_build_query( $value, null, '&' );
             } else {
                 $results[ $arrayKey ] = $value;

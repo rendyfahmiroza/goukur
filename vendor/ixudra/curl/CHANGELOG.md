@@ -2,9 +2,22 @@
 
 All Notable changes to `ixudra/curl` will be documented in this file
 
-## 6.18.0 - 2019-11-01
+## 6.21.0 - 2020-09-22
 ### Added
-- Added key-value support to `withHeaders()` method
+- withAuthorization utility method
+- withBearer utility method
+
+## 6.20.0 - 2020-08-07
+### Fixed
+- Data is now passed as POST parameters instead of GET for `DELETE` REQUESTS
+
+### Added
+- Additional docblocks
+- GET parameters are added to the URL on file download
+
+## 6.19.0 - 2020-03-03
+### Added
+- Added `withConnectTimeout()` method
 
 ## 6.17.0 - 2019-09-13
 ### Added
