@@ -84,7 +84,7 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="card-body">
+                    <div class="card-body" v-if="loadingPrint == false">
                         <button type="button" @click="postData" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
                     </div>
                 </div>

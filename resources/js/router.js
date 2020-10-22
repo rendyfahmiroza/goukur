@@ -5,10 +5,11 @@ import Berkas from './pages/admin/berkas/Berkas'
 import BerkasMandiri from './pages/admin/berkas/BerkasMandiri'
 import BerkasTertunda from './pages/admin/berkas/BerkasTertunda'
 import BerkasVerifikasi from './pages/admin/berkas/BerkasVerifikasi'
+import BerkasSelesai from './pages/admin/berkas/BerkasSelesai'
+import BerkasBatal from './pages/admin/berkas/BerkasBatal'
 import Detail from './pages/admin/berkas/Detail'
 import TambahBerkas from './pages/admin/berkas/TambahBerkass'
 import PerbaikiBerkas from './pages/admin/berkas/PerbaikiBerkas'
-
 
 // Manajemen Kegiatan
 import Kegiatan from './pages/admin/manajemen/kegiatan/Kegiatan'
@@ -114,7 +115,7 @@ const routes = [
             },
             {
                 path: '/berkas',
-                name: 'berkas',
+                name: 'berkas-proses',
                 component: Berkas,
                 meta: {
                     auth: true
@@ -122,7 +123,7 @@ const routes = [
             },
             {
                 path: '/berkas-mandiri',
-                name: 'berkas-mandiri',
+                name: 'berkas-baru',
                 component: BerkasMandiri,
                 meta: {
                     auth: true
@@ -140,6 +141,22 @@ const routes = [
                 path: '/berkas-verifikasi',
                 name: 'berkas-verifikasi',
                 component: BerkasVerifikasi,
+                meta: {
+                    auth: true
+                }
+            },
+            {
+                path: '/berkas-selesai',
+                name: 'berkas-selesai',
+                component: BerkasSelesai,
+                meta: {
+                    auth: true
+                }
+            },
+            {
+                path: '/berkas-batal',
+                name: 'berkas-batal',
+                component: BerkasBatal,
                 meta: {
                     auth: true
                 }

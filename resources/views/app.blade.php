@@ -5,10 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
-    <link rel="icon" href="{{ secure_asset('goukur/img/basic/favicon.ico') }}" type="image/x-icon">
+    <link rel="icon" href="{{ asset('goukur/img/basic/favicon.ico') }}" type="image/x-icon">
     <title>GO UKUR V.1</title>
     <!-- CSS -->
-    <link rel="stylesheet" href="{{ secure_asset('goukur/css/app.css') }}">
+    <link rel="stylesheet" href="{{ asset('goukur/css/app.css') }}">
 
 </head>
 <body class="light sidebar-mini sidebar-collapse">
@@ -61,6 +61,6 @@
     <div id="vue"><index></index></div>
 
     <script src="{{ mix('js/app.js') }}"></script>
-    <script src="{{ secure_asset('goukur/js/app.js') }}"></script>
+    <script src="{{ asset('goukur/js/app.js') }}"></script>
 </body>
 </html>

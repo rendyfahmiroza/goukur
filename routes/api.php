@@ -57,6 +57,8 @@ Route::get('berkas-surat-tugas/{id}','BerkasController@berkas_surat_tugas')->nam
 Route::get('berkas-mandiri','BerkasController@berkas_mandiri')->name('berkas.berkas_mandiri');
 Route::get('berkas-tertunda','BerkasController@berkas_tertunda')->name('berkas.berkas_tertunda');
 Route::get('berkas-verifikasi','BerkasController@berkas_verifikasi')->name('berkas.berkas_verifikasi');
+Route::get('berkas-selesai','BerkasController@berkas_selesai')->name('berkas.berkas_selesai');
+Route::get('berkas-batal','BerkasController@berkas_batal')->name('berkas.berkas_batal');
 Route::put('verifikasi/{id}','BerkasController@verifikasi')->name('berkas.verifikasi');
 Route::post('berkas-mandiri','BerkasController@store_mandiri')->name('berkas.store_mandiri');
 Route::get('berkas-mandiri-print/{id}','BerkasController@berkas_mandiri_print')->name('berkas.berkas_mandiri_print');

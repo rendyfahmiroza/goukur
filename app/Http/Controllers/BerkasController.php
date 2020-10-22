@@ -25,7 +25,7 @@ class BerkasController extends Controller
         if ($request->exists('filterData')) {
             $berkas = Berkas::where('status_proses','=','proses')->get();
         } else {
-            $berkas = Berkas::where('status_proses','<>','baru-mandiri')->get();
+            $berkas = Berkas::where('status_proses','=','proses')->get();
         }
         
         $json = array();
@@ -370,6 +370,70 @@ class BerkasController extends Controller
     }
 
     /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function berkas_selesai()
+    {
+        if (Auth::user()->hak_akses == '1') {
+            $berkas = Berkas::where('status_proses','=','selesai')->get();
+        } else {
+            $berkas = Berkas::where('status_s','=','selesai')->where('kabupaten_id','=',Auth::user()->kantah)->get();
+        }
+
+        $json = array();
+        foreach ($berkas as $value) {
+            $item = array();
+            $item['id'] = $value->id;
+            $item['nama_pemohon'] = $value->nama_pemohon;
+            $item['nomor_hak'] = $value->nomor_hak;
+            $item['kabupaten_id'] = $value->kabupaten_id;
+            $item['alamat'] = $value->alamat;
+            $item['kuasa'] = $value->kuasa_berkas;
+            $item['status_proses'] = $value->status_proses;
+            $item['fileDwg'] = $value->fileDwg;
+            $item['tanggal_input'] = \Carbon\Carbon::parse($value->created_at)->translatedFormat('d F Y');
+
+            array_push($json, $item);
+        }
+
+        return response()->json($json, 200);
+    }
+
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function berkas_batal()
+    {
+        if (Auth::user()->hak_akses == '1') {
+            $berkas = Berkas::where('status_proses','=','batal')->get();
+        } else {
+            $berkas = Berkas::where('status_s','=','batal')->where('kabupaten_id','=',Auth::user()->kantah)->get();
+        }
+
+        $json = array();
+        foreach ($berkas as $value) {
+            $item = array();
+            $item['id'] = $value->id;
+            $item['nama_pemohon'] = $value->nama_pemohon;
+            $item['nomor_hak'] = $value->nomor_hak;
+            $item['kabupaten_id'] = $value->kabupaten_id;
+            $item['alamat'] = $value->alamat;
+            $item['kuasa'] = $value->kuasa_berkas;
+            $item['status_proses'] = $value->status_proses;
+            $item['fileDwg'] = $value->fileDwg;
+            $item['tanggal_input'] = \Carbon\Carbon::parse($value->created_at)->translatedFormat('d F Y');
+
+            array_push($json, $item);
+        }
+
+        return response()->json($json, 200);
+    }
+
+    /**
      * Display the specified resource.
      *
      * @param  \App\Berkas  $berkas
@@ -498,26 +562,25 @@ class BerkasController extends Controller
         $telepon = '082275750031';
         $message = 'Hi John Doe, have a nice day.';
 
-        if ($request->status_proses == 'proses') {
-            // $response = Curl::to('https://gsm.zenziva.net/api/sendsms/')
-            // ->withData( 
-            //     array( 
-            //         'userkey' => $userkey,
-            //         'passkey' => $passkey,
-            //         'nohp' => $telepon,
-            //         'pesan' => $message 
-            //     )
-            // )
-            // ->asJsonResponse()->post();
-            // Notifikasi ke Petugas
-            $notifikasi = new Notifikasi();
-            $notifikasi->user_id = $berkas->petugas_ukur_id;
-            $notifikasi->message = 'Status pekerjaan sedang diproses';
-            $notifikasi->action_user_id = Auth::user()->id;
-            $notifikasi->action = 'Proses';
-            $notifikasi->status = '1';
-            $notifikasi->save();
-        }
+        $response = Curl::to('https://gsm.zenziva.net/api/sendsms/')
+        ->withData( 
+            array( 
+                'userkey' => $userkey,
+                'passkey' => $passkey,
+                'nohp' => $telepon,
+                'pesan' => $message 
+            )
+        )
+        ->asJsonResponse()->post();
+
+        // Notifikasi ke Petugas
+        $notifikasi = new Notifikasi();
+        $notifikasi->user_id = $berkas->petugas_ukur_id;
+        $notifikasi->message = 'Status pekerjaan sedang diproses';
+        $notifikasi->action_user_id = Auth::user()->id;
+        $notifikasi->action = 'Proses';
+        $notifikasi->status = '1';
+        $notifikasi->save();
 
         $berkas->update();
         return response()->json($berkas, 200);
@@ -568,6 +631,22 @@ class BerkasController extends Controller
         // Get data petugas ukur
         $petugas = User::where('id',$request->petugas_ukur_id)->first();
         $this->sendMessage($petugas->telegram_id, $berkas);
+
+        $userkey = 'e42bbc8eb418';
+        $passkey = 'tdfaqbz0pw';
+        $telepon = $berkas->nomor_hp_kuasa;
+        $message = 'GOUKUR BPN ACEH - Pemohon kami yang terhomat, kami informasikan dalam waktu dekat petugas ukur kami dengan nama: '.$petugas->name.' dan no. telp: '.$petugas->no_telepon.' akan melakukan pengukuran ke lokasi yang dimohon.';
+
+        $response = Curl::to('https://gsm.zenziva.net/api/sendsms/')
+        ->withData( 
+            array( 
+                'userkey' => $userkey,
+                'passkey' => $passkey,
+                'nohp' => $telepon,
+                'pesan' => $message 
+            )
+        )
+        ->asJsonResponse()->post();
 
         return response()->json($berkas, 200);
     }

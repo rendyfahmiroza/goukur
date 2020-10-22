@@ -2,20 +2,7 @@
 <div class="container-fluid relative animatedParent animateOnce p-0">
     <div class="animated fadeInUpShort go row d-flex bd-highlight no-gutters">
         <div class="flex-fill b-l height-full white">
-            <div class="row mt-4 ml-2" v-if="$auth.user().hak_akses == 1">
-                <div class="col-md-12">
-                    <div class="row">
-                        <div class="col-md-2">
-                            <select @change="getData($event)" id="category" class="custom-select form-control" required="">
-                                <option value="">Pilih Kabupate/Kota</option>
-                                <option v-for="(item, index) in itemsKabupaten" :value="item.id" :key="index">{{item.nama}}
-                                </option>
-                            </select>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="table-responsive mt-4" v-if="itemsBerkas.length > 0">
+            <div class="table-responsive mt-3" v-if="itemsBerkas.length > 0">
                 <table class="table table-striped table-hover r-0">
                     <tbody>
                         <tr v-for="(item, index) in itemsBerkas" :key="index" :class="{ 'red lighten-3' : item.tanggal_pengukuran <= 0 && item.status_proses == 'proses' }">
@@ -109,7 +96,7 @@ export default {
         },
         filterStatus(param) {
             axios.
-            get('/berkas', {
+            get('/berkas-batal', {
                     params: {
                         filterData: param
                     }
@@ -125,7 +112,7 @@ export default {
     },
     mounted() {
         axios.
-        get('/berkas')
+        get('/berkas-batal')
             .then(response => {
                 // console.log(response)
                 this.itemsBerkas = response.data

@@ -54,16 +54,16 @@
                             </div>
                             <ul class="sidebar-menu">
                                 <li v-if="$auth.user().hak_akses == 1">
-                                    <router-link :to="{ name: 'berkas' }">
-                                        <i class="icon icon icon-package s-24"></i>
-                                        <span>Berkas</span>
+                                    <router-link :to="{ name: 'berkas-baru' }">
+                                        <i class="icon icon icon-fiber_new s-24"></i>
+                                        <span>Berkas Baru</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
                                 <li v-if="$auth.user().hak_akses == 1">
-                                    <router-link :to="{ name: 'berkas-mandiri' }">
-                                        <i class="icon icon icon-fiber_new s-24"></i>
-                                        <span>Berkas Baru</span>
+                                    <router-link :to="{ name: 'berkas-proses' }">
+                                        <i class="icon icon icon-package s-24"></i>
+                                        <span>Berkas Proses</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
@@ -77,7 +77,21 @@
                                 <li v-if="$auth.user().hak_akses == 1">
                                     <router-link :to="{ name: 'berkas-verifikasi' }">
                                         <i class="icon icon icon-check s-24"></i>
-                                        <span>Konfirmasi</span>
+                                        <span>Berkas Verifikasi</span>
+                                        <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
+                                    </router-link>
+                                </li>
+                                <li v-if="$auth.user().hak_akses == 1">
+                                    <router-link :to="{ name: 'berkas-selesai' }">
+                                        <i class="icon icon icon-note-checked s-24"></i>
+                                        <span>Berkas Selesai</span>
+                                        <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
+                                    </router-link>
+                                </li>
+                                <li v-if="$auth.user().hak_akses == 1">
+                                    <router-link :to="{ name: 'berkas-batal' }">
+                                        <i class="icon icon icon-note-checked s-24"></i>
+                                        <span>Berkas Batal</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>

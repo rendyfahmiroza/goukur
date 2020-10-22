@@ -14,7 +14,7 @@ class DashboardController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {  
         // dd($this->sendMessage('479255374', 'Test'));
         // die;
         $berkas = Berkas::where('status_proses','<>','baru-mandiri')->get();
@@ -29,15 +29,16 @@ class DashboardController extends Controller
         foreach ($berkas as $value) {
             //  Manipulasi Tanggal
             $start_date = \Carbon\Carbon::now();
-            $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran);
+            $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran)->addDays(3);
             $result_date = $start_date->diffInDays($expired_date, false);
             // dd($result_date);
+            // echo $result_date;
             
             // Kalkulasi Jatuh Tempo
             if ($value->status_proses == 'batal') {
                 $batal++;
             } else {
-                if ($value->status_proses == 'proses' && $result_date <= 0) {
+                if ($value->status_proses == 'proses' && $result_date < 0) {
                     $jatuhTempo++;
                 }
             }
@@ -84,7 +85,7 @@ class DashboardController extends Controller
 
                 //  Manipulasi Tanggal
                 $start_date = \Carbon\Carbon::now();
-                $expired_date = \Carbon\Carbon::parse($bV->tanggal_pengukuran);
+                $expired_date = \Carbon\Carbon::parse($bV->tanggal_pengukuran)->addDays(3);
                 $result_date = $start_date->diffInDays($expired_date, false);
                 
                 // Kalkulasi Jatuh Tempo

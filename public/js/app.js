@@ -3471,6 +3471,20 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4253,18 +4267,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -4282,13 +4284,13 @@ __webpack_require__.r(__webpack_exports__);
         _this.itemsKabupaten = response.data.kota_kabupaten;
       });
     },
-    getData: function getData(id) {
+    getData: function getData(event) {
       var _this2 = this;
 
       // Reset
+      console.log(event.target.value);
       this.itemsBerkas = [];
-      this.clickIndex = id;
-      axios.get('/berkas_kab/' + id).then(function (response) {
+      axios.get('/berkas_kab/' + event.target.value).then(function (response) {
         _this2.itemsBerkas = response.data;
       });
     },
@@ -4328,8 +4330,137 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/berkas').then(function (response) {
       // console.log(response)
       _this5.itemsBerkas = response.data;
-    })["catch"](function (err) {}); // Get Kabupaten
+    })["catch"](function (err) {});
+    this.getKabupaten();
+  }
+});
 
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js&":
+/*!******************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js& ***!
+  \******************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      itemsBerkas: [],
+      // Kabupaten
+      itemsKabupaten: [],
+      clickIndex: ''
+    };
+  },
+  methods: {
+    getKabupaten: function getKabupaten() {
+      var _this = this;
+
+      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11').then(function (response) {
+        _this.itemsKabupaten = response.data.kota_kabupaten;
+      });
+    },
+    getData: function getData(event) {
+      var _this2 = this;
+
+      // Reset
+      console.log(event.target.value);
+      this.itemsBerkas = [];
+      axios.get('/berkas_kab/' + event.target.value).then(function (response) {
+        _this2.itemsBerkas = response.data;
+      });
+    },
+    deleteData: function deleteData(id, index) {
+      var _this3 = this;
+
+      if (confirm("Do you really want to delete?")) {
+        axios["delete"]('/berkas/' + id).then(function (resp) {
+          _this3.itemsBerkas.splice(index, 1);
+
+          _this3.$notify({
+            group: 'notif',
+            title: 'Notifikasi',
+            text: 'Data Berhasil Dihapus!'
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    filterStatus: function filterStatus(param) {
+      var _this4 = this;
+
+      axios.get('/berkas-batal', {
+        params: {
+          filterData: param
+        }
+      }).then(function (response) {
+        // console.log(response)
+        _this4.itemsBerkas = response.data;
+      })["catch"](function (err) {});
+    }
+  },
+  mounted: function mounted() {
+    var _this5 = this;
+
+    axios.get('/berkas-batal').then(function (response) {
+      // console.log(response)
+      _this5.itemsBerkas = response.data;
+    })["catch"](function (err) {});
     this.getKabupaten();
   }
 });
@@ -4504,6 +4635,136 @@ __webpack_require__.r(__webpack_exports__);
     axios.get('/berkas-mandiri').then(function (response) {
       _this3.itemsBerkas = response.data;
     });
+  }
+});
+
+/***/ }),
+
+/***/ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js&":
+/*!********************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/babel-loader/lib??ref--4-0!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js& ***!
+  \********************************************************************************************************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+/* harmony default export */ __webpack_exports__["default"] = ({
+  data: function data() {
+    return {
+      itemsBerkas: [],
+      // Kabupaten
+      itemsKabupaten: [],
+      clickIndex: ''
+    };
+  },
+  methods: {
+    getKabupaten: function getKabupaten() {
+      var _this = this;
+
+      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11').then(function (response) {
+        _this.itemsKabupaten = response.data.kota_kabupaten;
+      });
+    },
+    getData: function getData(event) {
+      var _this2 = this;
+
+      // Reset
+      console.log(event.target.value);
+      this.itemsBerkas = [];
+      axios.get('/berkas_kab/' + event.target.value).then(function (response) {
+        _this2.itemsBerkas = response.data;
+      });
+    },
+    deleteData: function deleteData(id, index) {
+      var _this3 = this;
+
+      if (confirm("Do you really want to delete?")) {
+        axios["delete"]('/berkas/' + id).then(function (resp) {
+          _this3.itemsBerkas.splice(index, 1);
+
+          _this3.$notify({
+            group: 'notif',
+            title: 'Notifikasi',
+            text: 'Data Berhasil Dihapus!'
+          });
+        })["catch"](function (error) {
+          console.log(error);
+        });
+      }
+    },
+    filterStatus: function filterStatus(param) {
+      var _this4 = this;
+
+      axios.get('/berkas-selesai', {
+        params: {
+          filterData: param
+        }
+      }).then(function (response) {
+        // console.log(response)
+        _this4.itemsBerkas = response.data;
+      })["catch"](function (err) {});
+    }
+  },
+  mounted: function mounted() {
+    var _this5 = this;
+
+    axios.get('/berkas-selesai').then(function (response) {
+      // console.log(response)
+      _this5.itemsBerkas = response.data;
+    })["catch"](function (err) {});
+    this.getKabupaten();
   }
 });
 
@@ -67398,14 +67659,16 @@ var render = function() {
                                   [
                                     _c(
                                       "router-link",
-                                      { attrs: { to: { name: "berkas" } } },
+                                      {
+                                        attrs: { to: { name: "berkas-baru" } }
+                                      },
                                       [
                                         _c("i", {
                                           staticClass:
-                                            "icon icon icon-package s-24"
+                                            "icon icon icon-fiber_new s-24"
                                         }),
                                         _vm._v(" "),
-                                        _c("span", [_vm._v("Berkas")])
+                                        _c("span", [_vm._v("Berkas Baru")])
                                       ]
                                     )
                                   ],
@@ -67420,17 +67683,15 @@ var render = function() {
                                     _c(
                                       "router-link",
                                       {
-                                        attrs: {
-                                          to: { name: "berkas-mandiri" }
-                                        }
+                                        attrs: { to: { name: "berkas-proses" } }
                                       },
                                       [
                                         _c("i", {
                                           staticClass:
-                                            "icon icon icon-fiber_new s-24"
+                                            "icon icon icon-package s-24"
                                         }),
                                         _vm._v(" "),
-                                        _c("span", [_vm._v("Berkas Baru")])
+                                        _c("span", [_vm._v("Berkas Proses")])
                                       ]
                                     )
                                   ],
@@ -67480,7 +67741,57 @@ var render = function() {
                                             "icon icon icon-check s-24"
                                         }),
                                         _vm._v(" "),
-                                        _c("span", [_vm._v("Konfirmasi")])
+                                        _c("span", [
+                                          _vm._v("Berkas Verifikasi")
+                                        ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.$auth.user().hak_akses == 1
+                              ? _c(
+                                  "li",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to: { name: "berkas-selesai" }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "icon icon icon-note-checked s-24"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("Berkas Selesai")])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.$auth.user().hak_akses == 1
+                              ? _c(
+                                  "li",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: { to: { name: "berkas-batal" } }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "icon icon icon-note-checked s-24"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("Berkas Batal")])
                                       ]
                                     )
                                   ],
@@ -68792,20 +69103,22 @@ var render = function() {
               _vm._v(" "),
               _c("hr"),
               _vm._v(" "),
-              _c("div", { staticClass: "card-body" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "btn btn-primary btn-lg",
-                    attrs: { type: "button" },
-                    on: { click: _vm.postData }
-                  },
-                  [
-                    _c("i", { staticClass: "icon-save mr-2" }),
-                    _vm._v("Save Data")
-                  ]
-                )
-              ])
+              _vm.loadingPrint == false
+                ? _c("div", { staticClass: "card-body" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-lg",
+                        attrs: { type: "button" },
+                        on: { click: _vm.postData }
+                      },
+                      [
+                        _c("i", { staticClass: "icon-save mr-2" }),
+                        _vm._v("Save Data")
+                      ]
+                    )
+                  ])
+                : _vm._e()
             ])
           ]),
           _vm._v(" "),
@@ -69285,134 +69598,55 @@ var render = function() {
             "animated fadeInUpShort go row d-flex bd-highlight no-gutters"
         },
         [
-          _c("div", [
-            _c("div", { staticClass: "p-5" }, [
-              _c(
-                "ul",
-                { staticClass: "sidebar-menu" },
-                [
-                  _vm._m(0),
-                  _vm._v(" "),
-                  _vm._l(_vm.itemsKabupaten, function(item, index) {
-                    return _c(
-                      "li",
-                      {
-                        key: index,
-                        staticClass: "treeview",
-                        on: {
-                          click: function($event) {
-                            return _vm.getData(item.id)
-                          }
-                        }
-                      },
-                      [
-                        _c("a", { attrs: { href: "#" } }, [
-                          _c("i", {
-                            class: {
-                              icon: true,
-                              "icon-circle-o": item.id != _vm.clickIndex,
-                              "icon-check-circle": item.id == _vm.clickIndex,
-                              "s-18": true,
-                              "text-danger": item.id == _vm.clickIndex
-                            }
-                          }),
-                          _vm._v(_vm._s(item.nama))
-                        ])
-                      ]
-                    )
-                  })
-                ],
-                2
-              )
-            ])
-          ]),
-          _vm._v(" "),
           _c("div", { staticClass: "flex-fill b-l height-full white" }, [
+            _vm.$auth.user().hak_akses == 1
+              ? _c("div", { staticClass: "row mt-4 ml-2" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "row" }, [
+                      _c("div", { staticClass: "col-md-2" }, [
+                        _c(
+                          "select",
+                          {
+                            staticClass: "custom-select form-control",
+                            attrs: { id: "category", required: "" },
+                            on: {
+                              change: function($event) {
+                                return _vm.getData($event)
+                              }
+                            }
+                          },
+                          [
+                            _c("option", { attrs: { value: "" } }, [
+                              _vm._v("Pilih Kabupate/Kota")
+                            ]),
+                            _vm._v(" "),
+                            _vm._l(_vm.itemsKabupaten, function(item, index) {
+                              return _c(
+                                "option",
+                                { key: index, domProps: { value: item.id } },
+                                [
+                                  _vm._v(
+                                    _vm._s(item.nama) +
+                                      "\n                                "
+                                  )
+                                ]
+                              )
+                            })
+                          ],
+                          2
+                        )
+                      ])
+                    ])
+                  ])
+                ])
+              : _vm._e(),
+            _vm._v(" "),
             _vm.itemsBerkas.length > 0
-              ? _c("div", { staticClass: "table-responsive" }, [
+              ? _c("div", { staticClass: "table-responsive mt-4" }, [
                   _c(
                     "table",
                     { staticClass: "table table-striped table-hover r-0" },
                     [
-                      _c("thead", [
-                        _c("tr", { staticClass: "no-b" }, [
-                          _c("th", [
-                            _c("div", { staticClass: "dropdown" }, [
-                              _c(
-                                "button",
-                                {
-                                  staticClass:
-                                    "btn btn-primary btn-sm dropdown-toggle r-3 pr-3 pl-3",
-                                  attrs: {
-                                    type: "button",
-                                    id: "dropdownMenuButton",
-                                    "data-toggle": "dropdown",
-                                    "aria-haspopup": "true",
-                                    "aria-expanded": "false"
-                                  }
-                                },
-                                [
-                                  _vm._v(
-                                    "\n                                        Filter Data\n                                    "
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "div",
-                                {
-                                  staticClass: "dropdown-menu",
-                                  attrs: {
-                                    "aria-labelledby": "dropdownMenuButton"
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.filterStatus("proses")
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass:
-                                          "icon icon-circle text-yellow mr-2"
-                                      }),
-                                      _vm._v(" Proses")
-                                    ]
-                                  ),
-                                  _vm._v(" "),
-                                  _c(
-                                    "a",
-                                    {
-                                      staticClass: "dropdown-item",
-                                      attrs: { href: "#" },
-                                      on: {
-                                        click: function($event) {
-                                          return _vm.filterStatus("jatuh-tempo")
-                                        }
-                                      }
-                                    },
-                                    [
-                                      _c("i", {
-                                        staticClass:
-                                          "icon icon-circle text-red mr-2"
-                                      }),
-                                      _vm._v(" Jatuh Tempo")
-                                    ]
-                                  )
-                                ]
-                              )
-                            ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
                       _c(
                         "tbody",
                         _vm._l(_vm.itemsBerkas, function(item, index) {
@@ -69607,7 +69841,7 @@ var render = function() {
                       position: "absolute",
                       top: "50%",
                       left: "50%",
-                      transform: "translate(-20%, -120%)"
+                      transform: "translate(-50%, -50%)"
                     }
                   },
                   [
@@ -69632,16 +69866,266 @@ var render = function() {
     ]
   )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("li", { staticClass: "header" }, [
-      _c("strong", [_vm._v("MAIN NAVIGATION")])
-    ])
-  }
-]
+var staticRenderFns = []
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc&":
+/*!**********************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc& ***!
+  \**********************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid relative animatedParent animateOnce p-0" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "animated fadeInUpShort go row d-flex bd-highlight no-gutters"
+        },
+        [
+          _c("div", { staticClass: "flex-fill b-l height-full white" }, [
+            _vm.itemsBerkas.length > 0
+              ? _c("div", { staticClass: "table-responsive mt-3" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover r-0" },
+                    [
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.itemsBerkas, function(item, index) {
+                          return _c(
+                            "tr",
+                            {
+                              key: index,
+                              class: {
+                                "red lighten-3":
+                                  item.tanggal_pengukuran <= 0 &&
+                                  item.status_proses == "proses"
+                              }
+                            },
+                            [
+                              _c("td", { staticClass: "pl-md-5" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "avatar avatar-md mr-3 mt-1 float-left"
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass: "w-80px mb-4",
+                                      attrs: {
+                                        src:
+                                          item.type_kuasa == "ppat"
+                                            ? "/goukur/img/dummy/u4.png"
+                                            : "/goukur/img/dummy/u2.png",
+                                        alt: ""
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c("div", [
+                                    _c("strong", [
+                                      _vm._v(_vm._s(item.nama_pemohon))
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "small",
+                                    { staticClass: "d-none d-md-block" },
+                                    [
+                                      _vm._v(
+                                        "No. Telepon: " +
+                                          _vm._s(item.no_hp_kuasa) +
+                                          " | Petugas Ukur: " +
+                                          _vm._s(item.petugas_ukur_id) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                item.status_proses == "selesai"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-success"
+                                      }),
+                                      _vm._v(
+                                        " Selesai\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses == "proses"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-warning"
+                                      }),
+                                      _vm._v(
+                                        " Proses\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses == "batal"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-danger"
+                                      }),
+                                      _vm._v(
+                                        " Batal\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses != "batal" &&
+                                item.status_proses != "selesai"
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge-pill badge-success s-12  ml-2"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(item.tanggal_pengukuran) +
+                                            " Hari"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  item.status_proses != "batal" &&
+                                  item.status_proses != "selesai"
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "btn-fab btn-fab-sm btn-primary shadow text-white mr-2",
+                                          attrs: {
+                                            to: {
+                                              name: "perbaiki-berkas",
+                                              params: { id: item.id }
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "icon-pencil"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "btn-fab btn-fab-sm btn-warning shadow text-white mr-2",
+                                      attrs: {
+                                        to: {
+                                          name: "detail-berkas",
+                                          params: { id: item.id }
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "icon-eye" })]
+                                  ),
+                                  _vm._v(" "),
+                                  item.status_proses != "batal" &&
+                                  item.status_proses != "selesai"
+                                    ? _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn-fab btn-fab-sm btn-danger shadow text-white",
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteData(
+                                                item.id,
+                                                index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("i", { staticClass: "icon-close" })]
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              : _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-center p-5 bd-highlight justify-content-center align-items-center",
+                    staticStyle: {
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)"
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "icon-note-important s-128 text-danger"
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "mt-3" }, [
+                      _vm._v("Belum Ada Berkas!")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "h6" }, [
+                      _vm._v(
+                        "Untuk melihat data disini, anda harus menambahkan berkas baru"
+                      )
+                    ])
+                  ]
+                )
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -69979,6 +70463,265 @@ var staticRenderFns = [
     ])
   }
 ]
+render._withStripped = true
+
+
+
+/***/ }),
+
+/***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c&":
+/*!************************************************************************************************************************************************************************************************************************!*\
+  !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c& ***!
+  \************************************************************************************************************************************************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "render", function() { return render; });
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return staticRenderFns; });
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "container-fluid relative animatedParent animateOnce p-0" },
+    [
+      _c(
+        "div",
+        {
+          staticClass:
+            "animated fadeInUpShort go row d-flex bd-highlight no-gutters"
+        },
+        [
+          _c("div", { staticClass: "flex-fill b-l height-full white" }, [
+            _vm.itemsBerkas.length > 0
+              ? _c("div", { staticClass: "table-responsive mt-3" }, [
+                  _c(
+                    "table",
+                    { staticClass: "table table-striped table-hover r-0" },
+                    [
+                      _c(
+                        "tbody",
+                        _vm._l(_vm.itemsBerkas, function(item, index) {
+                          return _c(
+                            "tr",
+                            {
+                              key: index,
+                              class: {
+                                "red lighten-3":
+                                  item.tanggal_pengukuran <= 0 &&
+                                  item.status_proses == "proses"
+                              }
+                            },
+                            [
+                              _c("td", { staticClass: "pl-md-5" }, [
+                                _c(
+                                  "div",
+                                  {
+                                    staticClass:
+                                      "avatar avatar-md mr-3 mt-1 float-left"
+                                  },
+                                  [
+                                    _c("img", {
+                                      staticClass: "w-80px mb-4",
+                                      attrs: {
+                                        src:
+                                          item.type_kuasa == "ppat"
+                                            ? "/goukur/img/dummy/u4.png"
+                                            : "/goukur/img/dummy/u2.png",
+                                        alt: ""
+                                      }
+                                    })
+                                  ]
+                                ),
+                                _vm._v(" "),
+                                _c("div", [
+                                  _c("div", [
+                                    _c("strong", [
+                                      _vm._v(_vm._s(item.nama_pemohon))
+                                    ])
+                                  ]),
+                                  _vm._v(" "),
+                                  _c(
+                                    "small",
+                                    { staticClass: "d-none d-md-block" },
+                                    [
+                                      _vm._v(
+                                        "No. Telepon: " +
+                                          _vm._s(item.no_hp_kuasa) +
+                                          " | Petugas Ukur: " +
+                                          _vm._s(item.petugas_ukur_id) +
+                                          "\n                                    "
+                                      )
+                                    ]
+                                  )
+                                ])
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                item.status_proses == "selesai"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-success"
+                                      }),
+                                      _vm._v(
+                                        " Selesai\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses == "proses"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-warning"
+                                      }),
+                                      _vm._v(
+                                        " Proses\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses == "batal"
+                                  ? _c("span", [
+                                      _c("span", {
+                                        staticClass:
+                                          "icon icon-circle s-12  mr-2 text-danger"
+                                      }),
+                                      _vm._v(
+                                        " Batal\n                                "
+                                      )
+                                    ])
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                item.status_proses != "batal" &&
+                                item.status_proses != "selesai"
+                                  ? _c(
+                                      "span",
+                                      {
+                                        staticClass:
+                                          "badge-pill badge-success s-12  ml-2"
+                                      },
+                                      [
+                                        _vm._v(
+                                          " " +
+                                            _vm._s(item.tanggal_pengukuran) +
+                                            " Hari"
+                                        )
+                                      ]
+                                    )
+                                  : _vm._e()
+                              ]),
+                              _vm._v(" "),
+                              _c(
+                                "td",
+                                [
+                                  item.status_proses != "batal" &&
+                                  item.status_proses != "selesai"
+                                    ? _c(
+                                        "router-link",
+                                        {
+                                          staticClass:
+                                            "btn-fab btn-fab-sm btn-primary shadow text-white mr-2",
+                                          attrs: {
+                                            to: {
+                                              name: "perbaiki-berkas",
+                                              params: { id: item.id }
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _c("i", {
+                                            staticClass: "icon-pencil"
+                                          })
+                                        ]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _c(
+                                    "router-link",
+                                    {
+                                      staticClass:
+                                        "btn-fab btn-fab-sm btn-warning shadow text-white mr-2",
+                                      attrs: {
+                                        to: {
+                                          name: "detail-berkas",
+                                          params: { id: item.id }
+                                        }
+                                      }
+                                    },
+                                    [_c("i", { staticClass: "icon-eye" })]
+                                  ),
+                                  _vm._v(" "),
+                                  item.status_proses != "batal" &&
+                                  item.status_proses != "selesai"
+                                    ? _c(
+                                        "a",
+                                        {
+                                          staticClass:
+                                            "btn-fab btn-fab-sm btn-danger shadow text-white",
+                                          attrs: { href: "#" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.deleteData(
+                                                item.id,
+                                                index
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [_c("i", { staticClass: "icon-close" })]
+                                      )
+                                    : _vm._e()
+                                ],
+                                1
+                              )
+                            ]
+                          )
+                        }),
+                        0
+                      )
+                    ]
+                  )
+                ])
+              : _c(
+                  "div",
+                  {
+                    staticClass:
+                      "text-center p-5 bd-highlight justify-content-center align-items-center",
+                    staticStyle: {
+                      position: "absolute",
+                      top: "50%",
+                      left: "50%",
+                      transform: "translate(-50%, -50%)"
+                    }
+                  },
+                  [
+                    _c("i", {
+                      staticClass: "icon-note-important s-128 text-danger"
+                    }),
+                    _vm._v(" "),
+                    _c("h3", { staticClass: "mt-3" }, [
+                      _vm._v("Belum Ada Berkas!")
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "h6" }, [
+                      _vm._v(
+                        "Untuk melihat data disini, anda harus menambahkan berkas baru"
+                      )
+                    ])
+                  ]
+                )
+          ])
+        ]
+      )
+    ]
+  )
+}
+var staticRenderFns = []
 render._withStripped = true
 
 
@@ -98405,6 +99148,75 @@ __webpack_require__.r(__webpack_exports__);
 
 /***/ }),
 
+/***/ "./resources/js/pages/admin/berkas/BerkasBatal.vue":
+/*!*********************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasBatal.vue ***!
+  \*********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BerkasBatal.vue?vue&type=template&id=6410f4cc& */ "./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc&");
+/* harmony import */ var _BerkasBatal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BerkasBatal.vue?vue&type=script&lang=js& */ "./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BerkasBatal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/admin/berkas/BerkasBatal.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js&":
+/*!**********************************************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js& ***!
+  \**********************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasBatal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BerkasBatal.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasBatal_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc&":
+/*!****************************************************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc& ***!
+  \****************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BerkasBatal.vue?vue&type=template&id=6410f4cc& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasBatal.vue?vue&type=template&id=6410f4cc&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasBatal_vue_vue_type_template_id_6410f4cc___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
 /***/ "./resources/js/pages/admin/berkas/BerkasMandiri.vue":
 /*!***********************************************************!*\
   !*** ./resources/js/pages/admin/berkas/BerkasMandiri.vue ***!
@@ -98469,6 +99281,75 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasMandiri_vue_vue_type_template_id_2688d0f0___WEBPACK_IMPORTED_MODULE_0__["render"]; });
 
 /* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasMandiri_vue_vue_type_template_id_2688d0f0___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
+
+
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/berkas/BerkasSelesai.vue":
+/*!***********************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasSelesai.vue ***!
+  \***********************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./BerkasSelesai.vue?vue&type=template&id=af41fa6c& */ "./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c&");
+/* harmony import */ var _BerkasSelesai_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./BerkasSelesai.vue?vue&type=script&lang=js& */ "./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+
+
+
+
+
+/* normalize component */
+
+var component = Object(_node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__["default"])(
+  _BerkasSelesai_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__["default"],
+  _BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__["render"],
+  _BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"],
+  false,
+  null,
+  null,
+  null
+  
+)
+
+/* hot reload */
+if (false) { var api; }
+component.options.__file = "resources/js/pages/admin/berkas/BerkasSelesai.vue"
+/* harmony default export */ __webpack_exports__["default"] = (component.exports);
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js&":
+/*!************************************************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js& ***!
+  \************************************************************************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasSelesai_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/babel-loader/lib??ref--4-0!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BerkasSelesai.vue?vue&type=script&lang=js& */ "./node_modules/babel-loader/lib/index.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=script&lang=js&");
+/* empty/unused harmony star reexport */ /* harmony default export */ __webpack_exports__["default"] = (_node_modules_babel_loader_lib_index_js_ref_4_0_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasSelesai_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_0__["default"]); 
+
+/***/ }),
+
+/***/ "./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c&":
+/*!******************************************************************************************!*\
+  !*** ./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c& ***!
+  \******************************************************************************************/
+/*! exports provided: render, staticRenderFns */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony import */ var _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! -!../../../../../node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!../../../../../node_modules/vue-loader/lib??vue-loader-options!./BerkasSelesai.vue?vue&type=template&id=af41fa6c& */ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/pages/admin/berkas/BerkasSelesai.vue?vue&type=template&id=af41fa6c&");
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "render", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__["render"]; });
+
+/* harmony reexport (safe) */ __webpack_require__.d(__webpack_exports__, "staticRenderFns", function() { return _node_modules_vue_loader_lib_loaders_templateLoader_js_vue_loader_options_node_modules_vue_loader_lib_index_js_vue_loader_options_BerkasSelesai_vue_vue_type_template_id_af41fa6c___WEBPACK_IMPORTED_MODULE_0__["staticRenderFns"]; });
 
 
 
@@ -100818,43 +101699,47 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _pages_admin_berkas_BerkasMandiri__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ./pages/admin/berkas/BerkasMandiri */ "./resources/js/pages/admin/berkas/BerkasMandiri.vue");
 /* harmony import */ var _pages_admin_berkas_BerkasTertunda__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./pages/admin/berkas/BerkasTertunda */ "./resources/js/pages/admin/berkas/BerkasTertunda.vue");
 /* harmony import */ var _pages_admin_berkas_BerkasVerifikasi__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./pages/admin/berkas/BerkasVerifikasi */ "./resources/js/pages/admin/berkas/BerkasVerifikasi.vue");
-/* harmony import */ var _pages_admin_berkas_Detail__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/admin/berkas/Detail */ "./resources/js/pages/admin/berkas/Detail.vue");
-/* harmony import */ var _pages_admin_berkas_TambahBerkass__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/admin/berkas/TambahBerkass */ "./resources/js/pages/admin/berkas/TambahBerkass.vue");
-/* harmony import */ var _pages_admin_berkas_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/admin/berkas/PerbaikiBerkas */ "./resources/js/pages/admin/berkas/PerbaikiBerkas.vue");
-/* harmony import */ var _pages_admin_manajemen_kegiatan_Kegiatan__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/Kegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/Kegiatan.vue");
-/* harmony import */ var _pages_admin_manajemen_kegiatan_TambahKegiatan__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/TambahKegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/TambahKegiatan.vue");
-/* harmony import */ var _pages_admin_manajemen_kegiatan_PerbaikiKegiatan__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/PerbaikiKegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/PerbaikiKegiatan.vue");
-/* harmony import */ var _pages_user_DashboardOperator__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/user/DashboardOperator */ "./resources/js/pages/user/DashboardOperator.vue");
-/* harmony import */ var _pages_admin_manajemen_operator_Berkas__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/Berkas */ "./resources/js/pages/admin/manajemen/operator/Berkas.vue");
-/* harmony import */ var _pages_admin_manajemen_operator_TambahBerkas__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/TambahBerkas */ "./resources/js/pages/admin/manajemen/operator/TambahBerkas.vue");
-/* harmony import */ var _pages_admin_manajemen_operator_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/PerbaikiBerkas */ "./resources/js/pages/admin/manajemen/operator/PerbaikiBerkas.vue");
-/* harmony import */ var _pages_user_DashboardPetugas__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/user/DashboardPetugas */ "./resources/js/pages/user/DashboardPetugas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_Berkas__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/Berkas */ "./resources/js/pages/admin/manajemen/petugas/Berkas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_Petugas__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/Petugas */ "./resources/js/pages/admin/manajemen/petugas/Petugas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_DaftarPetugas__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/DaftarPetugas */ "./resources/js/pages/admin/manajemen/petugas/DaftarPetugas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_DetailDaftarPetugas__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/DetailDaftarPetugas */ "./resources/js/pages/admin/manajemen/petugas/DetailDaftarPetugas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_TambahPetugas__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/TambahPetugas */ "./resources/js/pages/admin/manajemen/petugas/TambahPetugas.vue");
-/* harmony import */ var _pages_admin_manajemen_petugas_PerbaikiPetugas__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/PerbaikiPetugas */ "./resources/js/pages/admin/manajemen/petugas/PerbaikiPetugas.vue");
-/* harmony import */ var _pages_admin_manajemen_pengguna_Pengguna__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/Pengguna */ "./resources/js/pages/admin/manajemen/pengguna/Pengguna.vue");
-/* harmony import */ var _pages_admin_manajemen_pengguna_TambahPengguna__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/TambahPengguna */ "./resources/js/pages/admin/manajemen/pengguna/TambahPengguna.vue");
-/* harmony import */ var _pages_admin_manajemen_pengguna_PerbaikiPengguna__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/PerbaikiPengguna */ "./resources/js/pages/admin/manajemen/pengguna/PerbaikiPengguna.vue");
-/* harmony import */ var _pages_admin_manajemen_ppat_Berkas__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/Berkas */ "./resources/js/pages/admin/manajemen/ppat/Berkas.vue");
-/* harmony import */ var _pages_admin_manajemen_ppat_PPAT__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/PPAT */ "./resources/js/pages/admin/manajemen/ppat/PPAT.vue");
-/* harmony import */ var _pages_admin_manajemen_ppat_TambahPpat__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/TambahPpat */ "./resources/js/pages/admin/manajemen/ppat/TambahPpat.vue");
-/* harmony import */ var _pages_admin_manajemen_ppat_PerbaikiPpat__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/PerbaikiPpat */ "./resources/js/pages/admin/manajemen/ppat/PerbaikiPpat.vue");
-/* harmony import */ var _pages_admin_manajemen_kantor_Kantor__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/Kantor */ "./resources/js/pages/admin/manajemen/kantor/Kantor.vue");
-/* harmony import */ var _pages_admin_manajemen_kantor_TambahKantor__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/TambahKantor */ "./resources/js/pages/admin/manajemen/kantor/TambahKantor.vue");
-/* harmony import */ var _pages_admin_manajemen_kantor_PerbaikiKantor__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/PerbaikiKantor */ "./resources/js/pages/admin/manajemen/kantor/PerbaikiKantor.vue");
-/* harmony import */ var _pages_admin_manajemen_pembatalan_Pembatalan__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/Pembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/Pembatalan.vue");
-/* harmony import */ var _pages_admin_manajemen_pembatalan_TambahPembatalan__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/TambahPembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/TambahPembatalan.vue");
-/* harmony import */ var _pages_admin_manajemen_pembatalan_PerbaikiPembatalan__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/PerbaikiPembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/PerbaikiPembatalan.vue");
-/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/pages/Login.vue");
-/* harmony import */ var _pages_App__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./pages/App */ "./resources/js/pages/App.vue");
-/* harmony import */ var _pages_admin_Home__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./pages/admin/Home */ "./resources/js/pages/admin/Home.vue");
-/* harmony import */ var _pages_Daftar__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./pages/Daftar */ "./resources/js/pages/Daftar.vue");
-/* harmony import */ var _pages_user_ChangeProfil__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./pages/user/ChangeProfil */ "./resources/js/pages/user/ChangeProfil.vue");
-/* harmony import */ var _pages_user_ChangePass__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./pages/user/ChangePass */ "./resources/js/pages/user/ChangePass.vue");
+/* harmony import */ var _pages_admin_berkas_BerkasSelesai__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./pages/admin/berkas/BerkasSelesai */ "./resources/js/pages/admin/berkas/BerkasSelesai.vue");
+/* harmony import */ var _pages_admin_berkas_BerkasBatal__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./pages/admin/berkas/BerkasBatal */ "./resources/js/pages/admin/berkas/BerkasBatal.vue");
+/* harmony import */ var _pages_admin_berkas_Detail__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./pages/admin/berkas/Detail */ "./resources/js/pages/admin/berkas/Detail.vue");
+/* harmony import */ var _pages_admin_berkas_TambahBerkass__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./pages/admin/berkas/TambahBerkass */ "./resources/js/pages/admin/berkas/TambahBerkass.vue");
+/* harmony import */ var _pages_admin_berkas_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./pages/admin/berkas/PerbaikiBerkas */ "./resources/js/pages/admin/berkas/PerbaikiBerkas.vue");
+/* harmony import */ var _pages_admin_manajemen_kegiatan_Kegiatan__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/Kegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/Kegiatan.vue");
+/* harmony import */ var _pages_admin_manajemen_kegiatan_TambahKegiatan__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/TambahKegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/TambahKegiatan.vue");
+/* harmony import */ var _pages_admin_manajemen_kegiatan_PerbaikiKegiatan__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./pages/admin/manajemen/kegiatan/PerbaikiKegiatan */ "./resources/js/pages/admin/manajemen/kegiatan/PerbaikiKegiatan.vue");
+/* harmony import */ var _pages_user_DashboardOperator__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./pages/user/DashboardOperator */ "./resources/js/pages/user/DashboardOperator.vue");
+/* harmony import */ var _pages_admin_manajemen_operator_Berkas__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/Berkas */ "./resources/js/pages/admin/manajemen/operator/Berkas.vue");
+/* harmony import */ var _pages_admin_manajemen_operator_TambahBerkas__WEBPACK_IMPORTED_MODULE_15__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/TambahBerkas */ "./resources/js/pages/admin/manajemen/operator/TambahBerkas.vue");
+/* harmony import */ var _pages_admin_manajemen_operator_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_16__ = __webpack_require__(/*! ./pages/admin/manajemen/operator/PerbaikiBerkas */ "./resources/js/pages/admin/manajemen/operator/PerbaikiBerkas.vue");
+/* harmony import */ var _pages_user_DashboardPetugas__WEBPACK_IMPORTED_MODULE_17__ = __webpack_require__(/*! ./pages/user/DashboardPetugas */ "./resources/js/pages/user/DashboardPetugas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_Berkas__WEBPACK_IMPORTED_MODULE_18__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/Berkas */ "./resources/js/pages/admin/manajemen/petugas/Berkas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_Petugas__WEBPACK_IMPORTED_MODULE_19__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/Petugas */ "./resources/js/pages/admin/manajemen/petugas/Petugas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_DaftarPetugas__WEBPACK_IMPORTED_MODULE_20__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/DaftarPetugas */ "./resources/js/pages/admin/manajemen/petugas/DaftarPetugas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_DetailDaftarPetugas__WEBPACK_IMPORTED_MODULE_21__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/DetailDaftarPetugas */ "./resources/js/pages/admin/manajemen/petugas/DetailDaftarPetugas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_TambahPetugas__WEBPACK_IMPORTED_MODULE_22__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/TambahPetugas */ "./resources/js/pages/admin/manajemen/petugas/TambahPetugas.vue");
+/* harmony import */ var _pages_admin_manajemen_petugas_PerbaikiPetugas__WEBPACK_IMPORTED_MODULE_23__ = __webpack_require__(/*! ./pages/admin/manajemen/petugas/PerbaikiPetugas */ "./resources/js/pages/admin/manajemen/petugas/PerbaikiPetugas.vue");
+/* harmony import */ var _pages_admin_manajemen_pengguna_Pengguna__WEBPACK_IMPORTED_MODULE_24__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/Pengguna */ "./resources/js/pages/admin/manajemen/pengguna/Pengguna.vue");
+/* harmony import */ var _pages_admin_manajemen_pengguna_TambahPengguna__WEBPACK_IMPORTED_MODULE_25__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/TambahPengguna */ "./resources/js/pages/admin/manajemen/pengguna/TambahPengguna.vue");
+/* harmony import */ var _pages_admin_manajemen_pengguna_PerbaikiPengguna__WEBPACK_IMPORTED_MODULE_26__ = __webpack_require__(/*! ./pages/admin/manajemen/pengguna/PerbaikiPengguna */ "./resources/js/pages/admin/manajemen/pengguna/PerbaikiPengguna.vue");
+/* harmony import */ var _pages_admin_manajemen_ppat_Berkas__WEBPACK_IMPORTED_MODULE_27__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/Berkas */ "./resources/js/pages/admin/manajemen/ppat/Berkas.vue");
+/* harmony import */ var _pages_admin_manajemen_ppat_PPAT__WEBPACK_IMPORTED_MODULE_28__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/PPAT */ "./resources/js/pages/admin/manajemen/ppat/PPAT.vue");
+/* harmony import */ var _pages_admin_manajemen_ppat_TambahPpat__WEBPACK_IMPORTED_MODULE_29__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/TambahPpat */ "./resources/js/pages/admin/manajemen/ppat/TambahPpat.vue");
+/* harmony import */ var _pages_admin_manajemen_ppat_PerbaikiPpat__WEBPACK_IMPORTED_MODULE_30__ = __webpack_require__(/*! ./pages/admin/manajemen/ppat/PerbaikiPpat */ "./resources/js/pages/admin/manajemen/ppat/PerbaikiPpat.vue");
+/* harmony import */ var _pages_admin_manajemen_kantor_Kantor__WEBPACK_IMPORTED_MODULE_31__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/Kantor */ "./resources/js/pages/admin/manajemen/kantor/Kantor.vue");
+/* harmony import */ var _pages_admin_manajemen_kantor_TambahKantor__WEBPACK_IMPORTED_MODULE_32__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/TambahKantor */ "./resources/js/pages/admin/manajemen/kantor/TambahKantor.vue");
+/* harmony import */ var _pages_admin_manajemen_kantor_PerbaikiKantor__WEBPACK_IMPORTED_MODULE_33__ = __webpack_require__(/*! ./pages/admin/manajemen/kantor/PerbaikiKantor */ "./resources/js/pages/admin/manajemen/kantor/PerbaikiKantor.vue");
+/* harmony import */ var _pages_admin_manajemen_pembatalan_Pembatalan__WEBPACK_IMPORTED_MODULE_34__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/Pembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/Pembatalan.vue");
+/* harmony import */ var _pages_admin_manajemen_pembatalan_TambahPembatalan__WEBPACK_IMPORTED_MODULE_35__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/TambahPembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/TambahPembatalan.vue");
+/* harmony import */ var _pages_admin_manajemen_pembatalan_PerbaikiPembatalan__WEBPACK_IMPORTED_MODULE_36__ = __webpack_require__(/*! ./pages/admin/manajemen/pembatalan/PerbaikiPembatalan */ "./resources/js/pages/admin/manajemen/pembatalan/PerbaikiPembatalan.vue");
+/* harmony import */ var _pages_Login__WEBPACK_IMPORTED_MODULE_37__ = __webpack_require__(/*! ./pages/Login */ "./resources/js/pages/Login.vue");
+/* harmony import */ var _pages_App__WEBPACK_IMPORTED_MODULE_38__ = __webpack_require__(/*! ./pages/App */ "./resources/js/pages/App.vue");
+/* harmony import */ var _pages_admin_Home__WEBPACK_IMPORTED_MODULE_39__ = __webpack_require__(/*! ./pages/admin/Home */ "./resources/js/pages/admin/Home.vue");
+/* harmony import */ var _pages_Daftar__WEBPACK_IMPORTED_MODULE_40__ = __webpack_require__(/*! ./pages/Daftar */ "./resources/js/pages/Daftar.vue");
+/* harmony import */ var _pages_user_ChangeProfil__WEBPACK_IMPORTED_MODULE_41__ = __webpack_require__(/*! ./pages/user/ChangeProfil */ "./resources/js/pages/user/ChangeProfil.vue");
+/* harmony import */ var _pages_user_ChangePass__WEBPACK_IMPORTED_MODULE_42__ = __webpack_require__(/*! ./pages/user/ChangePass */ "./resources/js/pages/user/ChangePass.vue");
  // Berkas
+
+
 
 
 
@@ -100906,14 +101791,14 @@ __webpack_require__.r(__webpack_exports__);
 var routes = [{
   path: '/daftar',
   name: 'daftar',
-  component: _pages_Daftar__WEBPACK_IMPORTED_MODULE_38__["default"],
+  component: _pages_Daftar__WEBPACK_IMPORTED_MODULE_40__["default"],
   meta: {
     auth: false
   }
 }, {
   path: '/login',
   name: 'login',
-  component: _pages_Login__WEBPACK_IMPORTED_MODULE_35__["default"],
+  component: _pages_Login__WEBPACK_IMPORTED_MODULE_37__["default"],
   meta: {
     auth: false
   }
@@ -100927,38 +101812,38 @@ var routes = [{
 }, {
   path: '/',
   name: 'home.admin',
-  component: _pages_App__WEBPACK_IMPORTED_MODULE_36__["default"],
+  component: _pages_App__WEBPACK_IMPORTED_MODULE_38__["default"],
   children: [{
     path: '/dashboard',
     name: 'dashboard',
-    component: _pages_admin_Home__WEBPACK_IMPORTED_MODULE_37__["default"],
+    component: _pages_admin_Home__WEBPACK_IMPORTED_MODULE_39__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/dashboard-petugas',
     name: 'dashboard-petugas',
-    component: _pages_user_DashboardPetugas__WEBPACK_IMPORTED_MODULE_15__["default"],
+    component: _pages_user_DashboardPetugas__WEBPACK_IMPORTED_MODULE_17__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/dashboard-operator',
     name: 'dashboard-operator',
-    component: _pages_user_DashboardOperator__WEBPACK_IMPORTED_MODULE_11__["default"],
+    component: _pages_user_DashboardOperator__WEBPACK_IMPORTED_MODULE_13__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/berkas',
-    name: 'berkas',
+    name: 'berkas-proses',
     component: _pages_admin_berkas_Berkas__WEBPACK_IMPORTED_MODULE_1__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/berkas-mandiri',
-    name: 'berkas-mandiri',
+    name: 'berkas-baru',
     component: _pages_admin_berkas_BerkasMandiri__WEBPACK_IMPORTED_MODULE_2__["default"],
     meta: {
       auth: true
@@ -100978,212 +101863,226 @@ var routes = [{
       auth: true
     }
   }, {
+    path: '/berkas-selesai',
+    name: 'berkas-selesai',
+    component: _pages_admin_berkas_BerkasSelesai__WEBPACK_IMPORTED_MODULE_5__["default"],
+    meta: {
+      auth: true
+    }
+  }, {
+    path: '/berkas-batal',
+    name: 'berkas-batal',
+    component: _pages_admin_berkas_BerkasBatal__WEBPACK_IMPORTED_MODULE_6__["default"],
+    meta: {
+      auth: true
+    }
+  }, {
     path: '/detail-berkas/:id',
     name: 'detail-berkas',
-    component: _pages_admin_berkas_Detail__WEBPACK_IMPORTED_MODULE_5__["default"],
+    component: _pages_admin_berkas_Detail__WEBPACK_IMPORTED_MODULE_7__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-berkas',
     name: 'tambah-berkas',
-    component: _pages_admin_berkas_TambahBerkass__WEBPACK_IMPORTED_MODULE_6__["default"],
+    component: _pages_admin_berkas_TambahBerkass__WEBPACK_IMPORTED_MODULE_8__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-berkas/:id',
     name: 'perbaiki-berkas',
-    component: _pages_admin_berkas_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_7__["default"],
+    component: _pages_admin_berkas_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_9__["default"],
     meta: {
       auth: true
     }
   },, {
     path: '/tambah-berkas-operator',
     name: 'tambah-berkas-operator',
-    component: _pages_admin_manajemen_operator_TambahBerkas__WEBPACK_IMPORTED_MODULE_13__["default"],
+    component: _pages_admin_manajemen_operator_TambahBerkas__WEBPACK_IMPORTED_MODULE_15__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-berkas-operator/:id',
     name: 'perbaiki-berkas-operator',
-    component: _pages_admin_manajemen_operator_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_14__["default"],
+    component: _pages_admin_manajemen_operator_PerbaikiBerkas__WEBPACK_IMPORTED_MODULE_16__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/kegiatan',
     name: 'kegiatan',
-    component: _pages_admin_manajemen_kegiatan_Kegiatan__WEBPACK_IMPORTED_MODULE_8__["default"],
+    component: _pages_admin_manajemen_kegiatan_Kegiatan__WEBPACK_IMPORTED_MODULE_10__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-kegiatan',
     name: 'tambah-kegiatan',
-    component: _pages_admin_manajemen_kegiatan_TambahKegiatan__WEBPACK_IMPORTED_MODULE_9__["default"],
+    component: _pages_admin_manajemen_kegiatan_TambahKegiatan__WEBPACK_IMPORTED_MODULE_11__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-kegiatan/:id',
     name: 'perbaiki-kegiatan',
-    component: _pages_admin_manajemen_kegiatan_PerbaikiKegiatan__WEBPACK_IMPORTED_MODULE_10__["default"],
+    component: _pages_admin_manajemen_kegiatan_PerbaikiKegiatan__WEBPACK_IMPORTED_MODULE_12__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/pembatalan',
     name: 'pembatalan',
-    component: _pages_admin_manajemen_pembatalan_Pembatalan__WEBPACK_IMPORTED_MODULE_32__["default"],
+    component: _pages_admin_manajemen_pembatalan_Pembatalan__WEBPACK_IMPORTED_MODULE_34__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-pembatalan',
     name: 'tambah-pembatalan',
-    component: _pages_admin_manajemen_pembatalan_TambahPembatalan__WEBPACK_IMPORTED_MODULE_33__["default"],
+    component: _pages_admin_manajemen_pembatalan_TambahPembatalan__WEBPACK_IMPORTED_MODULE_35__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-pembatalan/:id',
     name: 'perbaiki-pembatalan',
-    component: _pages_admin_manajemen_pembatalan_PerbaikiPembatalan__WEBPACK_IMPORTED_MODULE_34__["default"],
+    component: _pages_admin_manajemen_pembatalan_PerbaikiPembatalan__WEBPACK_IMPORTED_MODULE_36__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/petugas',
     name: 'petugas',
-    component: _pages_admin_manajemen_petugas_Petugas__WEBPACK_IMPORTED_MODULE_17__["default"],
+    component: _pages_admin_manajemen_petugas_Petugas__WEBPACK_IMPORTED_MODULE_19__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/daftar-petugas',
     name: 'daftar-petugas',
-    component: _pages_admin_manajemen_petugas_DaftarPetugas__WEBPACK_IMPORTED_MODULE_18__["default"],
+    component: _pages_admin_manajemen_petugas_DaftarPetugas__WEBPACK_IMPORTED_MODULE_20__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/detail-daftar-petugas',
     name: 'detail-daftar-petugas',
-    component: _pages_admin_manajemen_petugas_DetailDaftarPetugas__WEBPACK_IMPORTED_MODULE_19__["default"],
+    component: _pages_admin_manajemen_petugas_DetailDaftarPetugas__WEBPACK_IMPORTED_MODULE_21__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-petugas',
     name: 'tambah-petugas',
-    component: _pages_admin_manajemen_petugas_TambahPetugas__WEBPACK_IMPORTED_MODULE_20__["default"],
+    component: _pages_admin_manajemen_petugas_TambahPetugas__WEBPACK_IMPORTED_MODULE_22__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-petugas/:id',
     name: 'perbaiki-petugas',
-    component: _pages_admin_manajemen_petugas_PerbaikiPetugas__WEBPACK_IMPORTED_MODULE_21__["default"],
+    component: _pages_admin_manajemen_petugas_PerbaikiPetugas__WEBPACK_IMPORTED_MODULE_23__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/ppat',
     name: 'ppat',
-    component: _pages_admin_manajemen_ppat_PPAT__WEBPACK_IMPORTED_MODULE_26__["default"],
+    component: _pages_admin_manajemen_ppat_PPAT__WEBPACK_IMPORTED_MODULE_28__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-ppat',
     name: 'tambah-ppat',
-    component: _pages_admin_manajemen_ppat_TambahPpat__WEBPACK_IMPORTED_MODULE_27__["default"],
+    component: _pages_admin_manajemen_ppat_TambahPpat__WEBPACK_IMPORTED_MODULE_29__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-ppat/:id',
     name: 'perbaiki-ppat',
-    component: _pages_admin_manajemen_ppat_PerbaikiPpat__WEBPACK_IMPORTED_MODULE_28__["default"],
+    component: _pages_admin_manajemen_ppat_PerbaikiPpat__WEBPACK_IMPORTED_MODULE_30__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/pengguna',
     name: 'pengguna',
-    component: _pages_admin_manajemen_pengguna_Pengguna__WEBPACK_IMPORTED_MODULE_22__["default"],
+    component: _pages_admin_manajemen_pengguna_Pengguna__WEBPACK_IMPORTED_MODULE_24__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-pengguna',
     name: 'tambah-pengguna',
-    component: _pages_admin_manajemen_pengguna_TambahPengguna__WEBPACK_IMPORTED_MODULE_23__["default"],
+    component: _pages_admin_manajemen_pengguna_TambahPengguna__WEBPACK_IMPORTED_MODULE_25__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-pengguna/:id',
     name: 'perbaiki-pengguna',
-    component: _pages_admin_manajemen_pengguna_PerbaikiPengguna__WEBPACK_IMPORTED_MODULE_24__["default"],
+    component: _pages_admin_manajemen_pengguna_PerbaikiPengguna__WEBPACK_IMPORTED_MODULE_26__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/kantor',
     name: 'kantor',
-    component: _pages_admin_manajemen_kantor_Kantor__WEBPACK_IMPORTED_MODULE_29__["default"],
+    component: _pages_admin_manajemen_kantor_Kantor__WEBPACK_IMPORTED_MODULE_31__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/tambah-kantor',
     name: 'tambah-kantor',
-    component: _pages_admin_manajemen_kantor_TambahKantor__WEBPACK_IMPORTED_MODULE_30__["default"],
+    component: _pages_admin_manajemen_kantor_TambahKantor__WEBPACK_IMPORTED_MODULE_32__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/perbaiki-kantor/:id',
     name: 'perbaiki-kantor',
-    component: _pages_admin_manajemen_kantor_PerbaikiKantor__WEBPACK_IMPORTED_MODULE_31__["default"],
+    component: _pages_admin_manajemen_kantor_PerbaikiKantor__WEBPACK_IMPORTED_MODULE_33__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/berkas-petugas',
     name: 'berkas-petugas',
-    component: _pages_admin_manajemen_petugas_Berkas__WEBPACK_IMPORTED_MODULE_16__["default"],
+    component: _pages_admin_manajemen_petugas_Berkas__WEBPACK_IMPORTED_MODULE_18__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/berkas-ppat',
     name: 'berkas-ppat',
-    component: _pages_admin_manajemen_ppat_Berkas__WEBPACK_IMPORTED_MODULE_25__["default"],
+    component: _pages_admin_manajemen_ppat_Berkas__WEBPACK_IMPORTED_MODULE_27__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/berkas-operator',
     name: 'berkas-operator',
-    component: _pages_admin_manajemen_operator_Berkas__WEBPACK_IMPORTED_MODULE_12__["default"],
+    component: _pages_admin_manajemen_operator_Berkas__WEBPACK_IMPORTED_MODULE_14__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/ubah-profil',
     name: 'ubah-profil',
-    component: _pages_user_ChangeProfil__WEBPACK_IMPORTED_MODULE_39__["default"],
+    component: _pages_user_ChangeProfil__WEBPACK_IMPORTED_MODULE_41__["default"],
     meta: {
       auth: true
     }
   }, {
     path: '/ubah-password',
     name: 'ubah-password',
-    component: _pages_user_ChangePass__WEBPACK_IMPORTED_MODULE_40__["default"],
+    component: _pages_user_ChangePass__WEBPACK_IMPORTED_MODULE_42__["default"],
     meta: {
       auth: true
     }
