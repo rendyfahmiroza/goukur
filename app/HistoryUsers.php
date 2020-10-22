@@ -20,4 +20,9 @@ class HistoryUsers extends Model
     {
         return $this->hasOne('App\Berkas','id','berkas_id');
     }
+
+    public function getVerifikasi()
+    {
+        return $this->hasMany('App\Verifikasi','history_user_id','id');
+    }
 }

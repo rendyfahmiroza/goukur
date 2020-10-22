@@ -19,9 +19,9 @@ class PetugasController extends Controller
     public function index()
     {
         if (Auth::user()->hak_akses == '1') {
-            $petugas = User::where('hak_akses', '3')->get();
+            $petugas = User::where('hak_akses', '3')->orderBy('id','DESC')->get();
         } else if (Auth::user()->hak_akses == '2') {
-            $petugas = User::where('hak_akses', '3')->where('kantah','=',Auth::user()->kantah)->get();
+            $petugas = User::where('hak_akses', '3')->where('kantah','=',Auth::user()->kantah)->orderBy('id','DESC')->get();
         }
 
         foreach ($petugas as $item) {
@@ -119,9 +119,9 @@ class PetugasController extends Controller
     public function show_berkas(Request $request)
     {
         if ($request->exists('filterData')) {
-            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->where('status_proses','=','proses')->get();
+            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->where('status_proses','=','proses')->orderBy('tanggal_pengukuran','DESC')->get();
         } else {
-            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->get();
+            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->orderBy('tanggal_pengukuran','DESC')->get();
         }
        
         // dd($berkas);

@@ -17,6 +17,7 @@
                                             <span v-if="statusProses == 'proses'" class="badge badge-warning">Proses</span>
                                             <span v-if="statusProses == 'batal'" class="badge badge-danger">Batal</span>
                                             <span v-if="statusProses == 'tunda'" class="badge badge-warning">Berkas ini ditunda</span>
+                                            <span v-if="statusProses == 'verifikasi'" class="badge badge-info text-white">Verifikasi Operator</span>
                                         </h3>
                                     </div>
                                 </div>
@@ -35,7 +36,7 @@
                                         Kuasa: <strong>{{kuasaBerkas}}</strong><br>
                                         <span v-if="boolPpat">Nama Kuasa PPAT: {{namaKuasa}}<br></span>
                                         <span>No Hp Kuasa: {{noHpKuasa}}<br></span>
-                                        <p class="lead"><strong>Berakhir Pada:</strong> {{manTanggalPengukuran}}</p>
+                                        <p><strong>Berakhir Pada:</strong> {{manTanggalPengukuran}}</p>
                                     </address>
                                 </div>
                                 <!-- /.col -->
@@ -61,28 +62,38 @@
                             </div>
                             <!-- /.row -->
 
-                            <div class="row" v-if="pembatalan != 'NULL'">
+                            <div class="row">
                                 <!-- accepted payments column -->
                                 <div class="col-7">
-                                    <p class="text-muted well well-sm no-shadow mt-3">
+                                    <p v-if="pembatalan != null" class="text-muted well well-sm no-shadow mt-3">
                                         <strong>Alasan Pembatalan: <h5 class="h5">{{pembatalan}}</h5></strong>
                                     </p>
+                                    <p class="mt-3"><strong>Catatan perbaikan oleh operator:</strong></p>
+                                    <ul v-if="verifikasi" class="timeline mt-1">
+                                        <li v-for="(v, index) in verifikasi" :key="index">
+                                            <i class="ion icon-user yellow"></i>
+                                            <div class="timeline-item  card">
+                                                <div class="card-header white">
+                                                    <h6><a href="#">Catatan #{{index+1}}</a> {{v.catatan}}<span class="float-right"><i class="ion icon-clock-o"></i> {{v.tanggal}}</span></h6>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <!-- /.col -->
                                 <div v-if="fileName && $auth.user().hak_akses != 4" class="col-5 d-flex flex-row-reverse ">
                                     <ul class="mailbox-attachments clearfix">
-                                    <li>
-                                        <span class="mailbox-attachment-icon"><i
-                                                class="icon-document-file-dwg text-danger"></i></span>
-                                        <div class="mailbox-attachment-info">
-                                            <a href="#" class="mailbox-attachment-name"><i class="icon-paperclip"></i>
-                                               {{fileName}}</a>
-                                            <button @click="downloadFile(fileName)" class="btn btn-success btn-xs float-right r-3"><i class="icon-cloud-download"></i></button>
-                                            <span class="mailbox-attachment-size">File Ukur
-                                            </span>
-                                        </div>
-                                    </li>
-                                </ul>
+                                        <li>
+                                            <span class="mailbox-attachment-icon"><i class="icon-document-file-dwg text-danger"></i></span>
+                                            <div class="mailbox-attachment-info">
+                                                <a href="#" class="mailbox-attachment-name"><i class="icon-paperclip"></i>
+                                                    {{fileName}}</a>
+                                                <button @click="downloadFile(fileName)" class="btn btn-success btn-xs float-right r-3"><i class="icon-cloud-download"></i></button>
+                                                <span class="mailbox-attachment-size">File Ukur
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                             </div>
                             <!-- /.row -->
@@ -90,14 +101,14 @@
                             <!-- this row will not appear when printing -->
                             <div class="row no-print">
                                 <div class="col-12" v-if="statusProses != 'batal' && statusProses != 'selesai'">
-                                    <button v-if="$auth.user().hak_akses == 3" @click="$modal.show('selesaiModal')" type="button" class="btn btn-success btn-lg float-right"><i class="icon icon-check"></i> Selesai
+                                    <button v-if="$auth.user().hak_akses == 3" @click="$modal.show('selesaiModal')" type="button" class="btn btn-success btn-lg float-right"><i class="icon icon-upload"></i> Upload DWG
                                     </button>
                                     <button v-if="$auth.user().hak_akses == 3" @click="pembatalanModal" type="button" class="btn btn-danger btn-lg float-right mr-2"><i class="icon icon-close"></i> Batalkan
                                     </button>
-                                    <button v-if="($auth.user().hak_akses == 1 || $auth.user().hak_akses == 2) && (statusProses != 'batal' && statusProses != 'tunda')" @click="konfirmasiBerkas('tunda')" type="button" class="btn btn-warning btn-lg  float-right mr-2"><i class="icon icon-schedule"></i> Tunda
-                                    </button>
-                                    <button v-if="($auth.user().hak_akses == 1 || $auth.user().hak_akses == 2) && statusProses == 'tunda'" @click="konfirmasiBerkas('proses')" type="button" class="btn btn-warning btn-lg  float-right mr-2"><i class="icon icon-schedule"></i> Proses Kembali
-                                    </button>
+                                    <!-- <button v-if="($auth.user().hak_akses == 1 || $auth.user().hak_akses == 2) && (statusProses != 'batal' && statusProses != 'tunda')" @click="konfirmasiBerkas('tunda')" type="button" class="btn btn-warning btn-lg  float-right mr-2"><i class="icon icon-schedule"></i> Tunda
+                                    </button> -->
+                                    <!-- <button v-if="($auth.user().hak_akses == 1 || $auth.user().hak_akses == 2) && statusProses == 'tunda'" @click="konfirmasiBerkas('proses')" type="button" class="btn btn-warning btn-lg  float-right mr-2"><i class="icon icon-schedule"></i> Proses Kembali
+                                    </button> -->
                                 </div>
                             </div>
                         </div>
@@ -189,8 +200,9 @@ export default {
             pembatalan: '',
             srcPdf: '',
             pdfView: false,
-            loaded: false,
+            loaded: true,
             boolPpat: false,
+            verifikasi: [],
 
             // Form
             itemsPembatalan: [],
@@ -284,9 +296,13 @@ export default {
                     })
             }
         },
-        downloadFile: function(file) {
-            axios.get('/download/'+file, {responseType: 'arraybuffer'}).then(res=>{
-                let blob = new Blob([res.data], {type:'application/*'})
+        downloadFile: function (file) {
+            axios.get('/download/' + file, {
+                responseType: 'arraybuffer'
+            }).then(res => {
+                let blob = new Blob([res.data], {
+                    type: 'application/*'
+                })
                 let link = document.createElement('a')
                 link.href = window.URL.createObjectURL(blob)
                 link.download = file
@@ -318,6 +334,7 @@ export default {
                     this.noSuratTugas = res.data.no_surat_tugas
                     this.statusProses = res.data.status_proses
                     this.pembatalan = res.data.batal
+                    this.verifikasi = res.data.verifikasi
                     this.fileName = res.data.file
 
                     if (res.data.kuasa_berkas == 'ppat') {
@@ -346,23 +363,23 @@ export default {
         }
     },
     mounted() {
-        axios.
-        get('/berkas-surat-tugas/' + this.$route.params.id, {
-                responseType: 'blob'
-            })
-            .then(response => {
-                const url = window.URL.createObjectURL(new Blob([response.data], {
-                    type: 'application/pdf'
-                }));
-                const link = document.createElement('a');
-                link.href = url;
-                link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
-                document.body.appendChild(link);
-                // link.click();
-                this.srcPdf = link
-                this.pdfView = true
-                this.loaded = true
-            })
+        // axios.
+        // get('/berkas-surat-tugas/' + this.$route.params.id, {
+        //         responseType: 'blob'
+        //     })
+        //     .then(response => {
+        //         const url = window.URL.createObjectURL(new Blob([response.data], {
+        //             type: 'application/pdf'
+        //         }));
+        //         const link = document.createElement('a');
+        //         link.href = url;
+        //         link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
+        //         document.body.appendChild(link);
+        //         // link.click();
+        //         this.srcPdf = link
+        //         this.pdfView = true
+        //         this.loaded = true
+        //     })
 
         this.id = this.$route.params.id
         this.getData()

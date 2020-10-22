@@ -225,6 +225,8 @@ class BerkasController extends Controller
             $berkas->no_hp_kuasa = $berkas->ppat->no_telepon;
         }
 
+        $berkas->verifikasi = $history->getVerifikasi;
+
         return response()->json($berkas, 200);
     }
 
@@ -345,15 +347,24 @@ class BerkasController extends Controller
     public function berkas_verifikasi()
     {
         if (Auth::user()->hak_akses == '1') {
-            $berkas = Berkas::where('status_proses','=','verifikasi')->get();
+            $berkas = Berkas::where('status_proses','=','verifikasi')->orderBy('id', 'DESC')->get();
         } else {
-            $berkas = Berkas::where('status_proses','=','verifikasi')->where('kabupaten_id','=',Auth::user()->kantah)->get();
+            $berkas = Berkas::where('status_proses','=','verifikasi')->where('kabupaten_id','=',Auth::user()->kantah)->orderBy('id', 'DESC')->get();
         }
 
         $json = array();
         foreach ($berkas as $value) {
+
+            $history = HistoryUsers::where('berkas_id', $value->id)->count();
+            if ($history > 1) {
+                $history = HistoryUsers::where('berkas_id', $value->id)->where('status_proses', '<>', 'batal')->where('status_proses', '<>', 'gagal')->get();
+            } else {
+                $history = HistoryUsers::where('berkas_id',$value->id)->first();
+            }
+
             $item = array();
             $item['id'] = $value->id;
+            $item['history_user_id'] = $history->id;
             $item['nama_pemohon'] = $value->nama_pemohon;
             $item['nomor_hak'] = $value->nomor_hak;
             $item['kabupaten_id'] = $value->kabupaten_id;
@@ -379,7 +390,7 @@ class BerkasController extends Controller
         if (Auth::user()->hak_akses == '1') {
             $berkas = Berkas::where('status_proses','=','selesai')->get();
         } else {
-            $berkas = Berkas::where('status_s','=','selesai')->where('kabupaten_id','=',Auth::user()->kantah)->get();
+            $berkas = Berkas::where('status_proses','=','selesai')->where('kabupaten_id','=',Auth::user()->kantah)->get();
         }
 
         $json = array();
@@ -411,7 +422,7 @@ class BerkasController extends Controller
         if (Auth::user()->hak_akses == '1') {
             $berkas = Berkas::where('status_proses','=','batal')->get();
         } else {
-            $berkas = Berkas::where('status_s','=','batal')->where('kabupaten_id','=',Auth::user()->kantah)->get();
+            $berkas = Berkas::where('status_proses','=','batal')->where('kabupaten_id','=',Auth::user()->kantah)->get();
         }
 
         $json = array();

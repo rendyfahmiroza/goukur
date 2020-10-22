@@ -60,6 +60,7 @@ Route::get('berkas-verifikasi','BerkasController@berkas_verifikasi')->name('berk
 Route::get('berkas-selesai','BerkasController@berkas_selesai')->name('berkas.berkas_selesai');
 Route::get('berkas-batal','BerkasController@berkas_batal')->name('berkas.berkas_batal');
 Route::put('verifikasi/{id}','BerkasController@verifikasi')->name('berkas.verifikasi');
+Route::post('perbaikan-verifikasi/{id}','VerifikasiController@store')->name('verifikasi.store');
 Route::post('berkas-mandiri','BerkasController@store_mandiri')->name('berkas.store_mandiri');
 Route::get('berkas-mandiri-print/{id}','BerkasController@berkas_mandiri_print')->name('berkas.berkas_mandiri_print');
 Route::put('konfirmasi-berkas/{id}','BerkasController@konfirmasi_berkas')->name('berkas.konfirmasi_berkas');

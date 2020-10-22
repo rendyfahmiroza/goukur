@@ -14,7 +14,6 @@
                             <!-- ROLE: 2 -->
                             <div v-if="$auth.user().hak_akses == 2">
                                 <router-link class="nav-link" to="/dashboard-operator"><i class="icon-dashboard"></i></router-link>
-                                <router-link class="nav-link" :to="{ name: 'berkas-operator' }"><i class="icon-message"></i></router-link>
                             </div>
 
                             <!-- ROLE: 1 AND 2 -->
@@ -53,42 +52,42 @@
                                 </div>
                             </div>
                             <ul class="sidebar-menu">
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-baru' }">
                                         <i class="icon icon icon-fiber_new s-24"></i>
                                         <span>Berkas Baru</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-proses' }">
                                         <i class="icon icon icon-package s-24"></i>
                                         <span>Berkas Proses</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-tertunda' }">
                                         <i class="icon icon icon-sync_problem s-24"></i>
                                         <span>Berkas Tertunda</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-verifikasi' }">
                                         <i class="icon icon icon-check s-24"></i>
                                         <span>Berkas Verifikasi</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-selesai' }">
                                         <i class="icon icon icon-note-checked s-24"></i>
                                         <span>Berkas Selesai</span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
-                                <li v-if="$auth.user().hak_akses == 1">
+                                <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-batal' }">
                                         <i class="icon icon icon-note-checked s-24"></i>
                                         <span>Berkas Batal</span>

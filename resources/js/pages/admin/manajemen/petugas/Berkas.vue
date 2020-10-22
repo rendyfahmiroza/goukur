@@ -43,6 +43,9 @@
                                 <span v-if="item.status_proses == 'batal'">
                                     <span class="icon icon-circle s-12  mr-2 text-danger"></span> Batal
                                 </span>
+                                <span v-if="item.status_proses == 'verifikasi'">
+                                    <span class="icon icon-circle s-12  mr-2 text-info"></span> Verifikasi Operator
+                                </span>
                                 <span class="badge-pill badge-success s-12  ml-2" v-if="item.status_proses != 'batal' && item.status_proses != 'selesai'"> {{ item.tanggal_pengukuran }} Hari</span>
                             </td>
                             <td align="right">
