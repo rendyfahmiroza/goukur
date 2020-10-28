@@ -6,10 +6,10 @@
                 <h1 class="font-weight-bold"><i class="icon-room"></i> GO-UKUR.</h1>
             </div>
             <div class="p-5">
-                <h3>Welcome Back</h3>
+                <h3>Selamat Datang</h3>
                 <p>Hey Soldier welcome back signin now there is lot of
                     new stuff waiting
-                    for you</p>
+                    for you.</p>
                 <div class="alert alert-danger pb-0" v-if="has_error">
                     <p>Error.</p>
                 </div>
@@ -23,7 +23,7 @@
                                placeholder="Password">
                     </div>
                     <input v-if="hasLogin" type="button" @click="login" class="btn btn-success btn-lg btn-block" value="Log In">
-                    <router-link :to="{ name: 'daftar' }" class="btn btn-secondary btn-lg btn-block">Form Daftar</router-link>
+                    <!-- <router-link :to="{ name: 'daftar' }" class="btn btn-secondary btn-lg btn-block">Form Daftar</router-link> -->
                 </form>
             </div>
         </div>
@@ -69,7 +69,7 @@ export default {
                 success: (res) => {
                     setTimeout(() => {
                         console.log(this.$auth.user())
-                        const redirectTo = this.$auth.user().hak_akses == 1 ? 'dashboard' : this.$auth.user().hak_akses == 2 ? 'dashboard-operator' : this.$auth.user().hak_akses == 3 ? 'dashboard-petugas' : this.$auth.user().hak_akses == 4 ? 'berkas-ppat' : '/'
+                        const redirectTo = this.$auth.user().hak_akses == 1 ? 'dashboard' : this.$auth.user().hak_akses == 2 ? 'dashboard-operator' : this.$auth.user().hak_akses == 3 ? 'dashboard-petugas' : this.$auth.user().hak_akses == 4 ? 'berkas-ppat' : this.$auth.user().hak_akses == 5 ? 'daftar' : '/'
                         
                         if (redirectTo != '/') {
                             this.$router.push({

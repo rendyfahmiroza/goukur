@@ -22,15 +22,6 @@
                                 <small>Tanggal Daftar:</small> <br>
                                 {{item.tanggal_input}}
                             </td>
-                            <td  align="right" class="pl-md-5 text-right">
-                                <div>
-                                    <div>
-                                        <strong>{{item.kabupaten}}</strong>
-                                    </div>
-                                    <small class="d-none d-md-block">{{item.kecamatan}}, {{item.desa}}
-                                    </small>
-                                </div>
-                            </td>
                             <td align="right">
                                 <button @click="penugasanModal(item.id, item.kabupaten_id, index)" class="btn-fab btn-fab-sm btn-success shadow text-white mr-2"><i class="icon-check"></i></button>
                             </td>

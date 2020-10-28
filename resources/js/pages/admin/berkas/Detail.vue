@@ -52,7 +52,7 @@
                                     </table>
                                     <hr>
                                     <span class="font-weight-bold">File Ukur (.Dwg):</span>
-                                    <ul class="mt-3 mailbox-attachments clearfix">
+                                    <ul v-if="fileName != null" class="mt-3 mailbox-attachments clearfix">
                                         <li>
                                             <div class="mailbox-attachment-info">
                                                 <a href="#" class="mailbox-attachment-name"><i class="icon-paperclip"></i>
@@ -63,12 +63,13 @@
                                             </div>
                                         </li>
                                     </ul>
+                                    <p class="mb-0 pb-0" v-else>Belum ada file yang diupload</p>
                                 </div>
                                 <!-- /.col -->
                                 <div class="col-sm-5">
                                     <address>
-                                    <strong class="text-info">Tanggal Pengukuran:</strong> {{tanggalPengukuran}}</br>
-                                    <strong class="text-danger">Tanggal Jatuh Tempo:</strong> {{manTanggalPengukuran}}</br>
+                                    <strong class="text-info">Tanggal Pengukuran:</strong> {{tanggalPengukuran}}<br />
+                                    <strong class="text-danger">Tanggal Jatuh Tempo:</strong> {{manTanggalPengukuran}}<br />
                                     </address>
                                     <p v-if="pembatalan != null" class="text-muted well well-sm no-shadow mt-3">
                                         <strong>Alasan Pembatalan: <h5 class="h5">{{pembatalan}}</h5></strong>

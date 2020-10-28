@@ -59,15 +59,7 @@ import Daftar from './pages/Daftar'
 import UbahProfil from './pages/user/ChangeProfil'
 import UbahPassword from './pages/user/ChangePass'
 
-const routes = [      
-    {
-        path: '/daftar',
-        name: 'daftar',
-        component: Daftar,
-        meta: {
-            auth: false
-        }
-    },
+const routes = [   
     {
         path: '/login',
         name: 'login',
@@ -86,7 +78,7 @@ const routes = [
     },
     {
         path: '/',
-        name: 'home.admin',
+        name: 'Home',
         component: HomeAdmin,
         children: [
             {
@@ -401,7 +393,15 @@ const routes = [
                 meta: {
                     auth: true
                 }
-            }
+            },           
+            {
+                path: '/daftar',
+                name: 'daftar',
+                component: Daftar,
+                meta: {
+                    auth: true
+                }
+            },
         ],
         meta: {
             auth: true

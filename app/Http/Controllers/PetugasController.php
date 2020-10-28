@@ -119,11 +119,11 @@ class PetugasController extends Controller
     public function show_berkas(Request $request)
     {
         if ($request->exists('filterData')) {
-            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->where('status_proses','=','proses')->orderBy('tanggal_pengukuran','DESC')->get();
+            $berkas = HistoryUsers::where('user_id','=', Auth::user()->id)->where('status_proses','=','proses')->orderBy('tanggal_pengukuran','DESC')->get();
         } else {
-            $berkas = HistoryUsers::where('user_id', Auth::user()->id)->orderBy('tanggal_pengukuran','DESC')->get();
+            $berkas = HistoryUsers::where('user_id', '=', Auth::user()->id)->where('status_proses','<>','gagal')->orderBy('tanggal_pengukuran','DESC')->get();
         }
-       
+        // echo $berkas;
         // dd($berkas);
 
         $json = array();

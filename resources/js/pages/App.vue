@@ -33,6 +33,11 @@
                                 <router-link class="nav-link" :to="{ name: 'berkas-ppat' }"><i class="icon-message"></i></router-link>
                             </div>
 
+                            <!-- ROLE: 4 -->
+                            <div v-if="$auth.user().hak_akses == 5">
+                                <router-link class="nav-link" :to="{ name: 'daftar' }"><i class="icon-add"></i></router-link>
+                            </div>
+
                             <!-- <a class="nav-link" id="v-pills-settings-tab" href="#"><i class="icon-settings"></i></a> -->
                             <a href="">
                                 <figure class="avatar">
@@ -76,7 +81,7 @@
                                 <li v-if="$auth.user().hak_akses == 1 || $auth.user().hak_akses == 2">
                                     <router-link :to="{ name: 'berkas-tertunda' }">
                                         <i class="icon icon icon-sync_problem s-24"></i>
-                                        <span>Berkas Tertunda</span>
+                                        <span>Berkas Tertunda <span style="padding: 0; font-size: 10px; width: 15px; height: 15px; line-height: 15px; vertical-align: middle" class="badge badge-danger rounded-circle ml-3" v-if="countTertunda > 0">{{countTertunda}}</span></span>
                                         <!-- <span class="badge r-3 badge-primary pull-right">4</span> -->
                                     </router-link>
                                 </li>
@@ -200,7 +205,8 @@ export default {
             itemsPetugas: [],
             countVerifikasi: 0,
             countBaru: 0,
-            countProses: 0
+            countProses: 0,
+            countTertunda: 0
         }
     },
     computed: {
@@ -239,6 +245,7 @@ export default {
                 this.countVerifikasi = response.data.verifikasi
                 this.countBaru = response.data.baru
                 this.countProses = response.data.proses
+                this.countTertunda = response.data.tertunda
                 // this.itemsPetugas = response.data
             })
     }

@@ -10,11 +10,10 @@ class Berkas extends Model
     protected $fillable = [
         'nama_pemohon', 'kegiatan_id',
         'nomor_hak', 'kabupaten_id',
-        'kecamatan_id', 'desa_id',
+        'kecamatan_id', 'desa_id', 'alamat',
         'petugas_ukur_id', 'catatan',
         'tanggal_pengukuran', 'kuasa_berkas', 'kuasa_ppat',
-        'no_hp_kuasa',
-        'status_proses', 'pembatalan_id', 'alasan', 'fileDwg'
+        'no_hp_kuasa', 'status_proses', 'pembatalan_id', 'alasan', 'fileDwg'
     ];
 
     public function pengguna()

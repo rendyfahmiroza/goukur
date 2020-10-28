@@ -123,6 +123,7 @@ class BerkasController extends Controller
         $berkas->kabupaten_id = $request->kabupaten_id;
         $berkas->kecamatan_id = $request->kecamatan_id;
         $berkas->desa_id = $request->desa_id;
+        $berkas->alamat = $request->alamat;
         $berkas->kuasa_berkas = $request->kuasa_berkas;
         
         if ($request->kuasa_berkas == 'masyarakat') {
@@ -171,11 +172,11 @@ class BerkasController extends Controller
     public function show($id)
     {
         $berkas = Berkas::find($id);
-
+        
         // Manipulasi Tanggal untuk mengetahui jatuh tempo
         $history = HistoryUsers::where('berkas_id', $id)->count();
         if ($history > 1) {
-            $history = HistoryUsers::where('berkas_id', $id)->where('status_proses', '<>', 'batal')->where('status_proses', '<>', 'gagal')->get();
+            $history = HistoryUsers::where('berkas_id', $id)->where('status_proses', '<>', 'batal')->where('status_proses', '<>', 'gagal')->first();
         } else {
             $history = HistoryUsers::where('berkas_id', $id)->first();
         }
@@ -247,14 +248,19 @@ class BerkasController extends Controller
      */
     public function show_kab($id)
     {
-        $berkas = Berkas::where('kabupaten_id', $id)->where('status_proses','<>','baru-mandiri')->get();
+        $berkas = Berkas::where('kabupaten_id', $id)->where('status_proses','=','proses')->get();
         
         $json = array();
         foreach ($berkas as $value) {
             $item = array();
-
             // Manipulasi Tanggal untuk mengetahui jatuh tempo
-            $history = HistoryUsers::where('berkas_id', $value->id)->where('status_proses', 'proses')->first();
+            $history = HistoryUsers::where('berkas_id', $value->id)->count();
+            if ($history > 1) {
+                $history = HistoryUsers::where('berkas_id', $value->id)->where('status_proses', '=', 'proses')->first();
+            } else {
+                $history = HistoryUsers::where('berkas_id', $value->id)->first();
+            }
+            
             $start_date = \Carbon\Carbon::now();
             $expired_date = \Carbon\Carbon::parse($history->tanggal_pengukuran);
             $result_date = $start_date->diffInDays($expired_date, false);
@@ -467,7 +473,7 @@ class BerkasController extends Controller
         // Check Count History
         $history = HistoryUsers::where('berkas_id', $id)->count();
         if ($history > 1) {
-            $history = HistoryUsers::where('berkas_id', $id)->where('status_proses', '<>', 'batal')->where('status_proses', '<>', 'gagal')->get();
+            $history = HistoryUsers::where('berkas_id', $id)->where('status_proses', '<>', 'batal')->where('status_proses', '<>', 'gagal')->first();
         } else {
             $history = HistoryUsers::where('berkas_id', $id)->first();
         }
@@ -510,11 +516,11 @@ class BerkasController extends Controller
         $data = Berkas::where('id', $id)->first();
     
         // Manipulasi Lokasi
-        $district = Districts::find($berkas->kecamatan_id);
-        $berkas->man_kecamatan = $district->name;
+        $district = Districts::find($data->kecamatan_id);
+        $data->man_kecamatan = $district->name;
 
-        $village = Villages::find($berkas->desa_id);
-        $berkas->man_desa = $village->name;
+        $village = Villages::find($data->desa_id);
+        $data->man_desa = $village->name;
 
         // Data Kantor
         $data->nama_kantor = $data->kantor->nama;
@@ -776,11 +782,13 @@ class BerkasController extends Controller
         $verifikasi = Berkas::where('status_proses','verifikasi')->count();
         $baru = Berkas::where('status_proses','baru-mandiri')->count();
         $proses = Berkas::where('status_proses','proses')->count();
+        $tertunda = Berkas::where('status_proses','tertunda')->count();
 
         $json = array();
         $json['verifikasi'] = $verifikasi;
         $json['baru'] = $baru;
         $json['proses'] = $proses;
+        $json['tertunda'] = $tertunda;
         return response()->json($json, 200);
     }
 

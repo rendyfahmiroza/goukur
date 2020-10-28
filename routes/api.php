@@ -87,3 +87,6 @@ Route::resource('kantor','KantorController',['except' => ['create','edit']]);
 
 // Setting
 Route::put('change-pass','UserController@change_pass')->name('user.change_pass');
+
+// Robot
+Route::get('tertunda','RobotController@tertunda')->name('robot.tertunda');

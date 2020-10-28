@@ -1,43 +1,33 @@
 <template>
 <div class="container-fluid relative animatedParent animateOnce p-0">
-    <notifications class="mt-5 mr-2" group="notif" position="top right"/>
+    <notifications class="mt-5 mr-2" group="notif" position="top right" />
     <div class="animated fadeInUpShort go mt-5">
         <div class="col-md-8 offset-md-2 col-sm-12 my-2">
-            <form action="#">
+            <form v-if="!loadingPrint" action="#">
                 <div class="card no-b">
                     <div class="card-body">
                         <h3>Berkas Mandiri</h3>
                         <hr>
                         <div class="form-row">
-                            <div class="col-md-12 row">
-                                <div class="form-group col-md-6 m-0">
-                                    <label for="name" class="col-form-label s-12">Nama Pemohon</label>
-                                    <input id="name" v-model="namaPemohon" placeholder="*Masukan Nama Pemohon" class="form-control r-0 light s-12 " type="text">
-                                </div>
-                                <div class="form-group col-md-6 m-0">
-                                    <label for="cnic" class="col-form-label s-12">Nomor Hak</label>
-                                    <input id="cnic" v-model="nomorHak" placeholder="Masukan Nomor Hak" class="form-control r-0 light s-12 date-picker" type="text">
-                                </div>
-                                <div class="form-group col-md-12 m-0">
-                                    <label for="dob" class="col-form-label s-12">Kegiatan</label>
-                                    <select v-model="selectedKegiatan" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref">
-                                        <option value="" selected>--Pilih--</option>
-                                        <option :value="item.id" v-for="(item, i) in itemsKegiatan" :key="i">{{item.kegiatan}}</option>
-                                    </select>
-                                </div>
+                            <div class="form-group col-md-4 m-0">
+                                <label for="name" class="col-form-label s-12">Nama Pemohon</label>
+                                <input id="name" v-model="namaPemohon" placeholder="*Masukan Nama Pemohon" class="form-control r-0 light s-12 " type="text">
+                            </div>
+                            <div class="form-group col-md-4 m-0">
+                                <label for="cnic" class="col-form-label s-12">Nomor Hak</label>
+                                <input id="cnic" v-model="nomorHak" placeholder="Masukan Nomor Hak" class="form-control r-0 light s-12 date-picker" type="text">
+                            </div>
+                            <div class="form-group col-md-4 m-0">
+                                <label for="dob" class="col-form-label s-12">Kegiatan</label>
+                                <select v-model="selectedKegiatan" class="custom-select mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref">
+                                    <option value="" selected>--Pilih--</option>
+                                    <option :value="item.id" v-for="(item, i) in itemsKegiatan" :key="i">{{item.kegiatan}}</option>
+                                </select>
                             </div>
                         </div>
 
-                        <div class="form-row mt-1">
-                            <div class="form-group col-md-4 m-0">
-                                <label for="email" class="col-form-label s-12">Kabupaten</label>
-                                <select v-model="selectedKabupaten" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref" @change="getKecamatan">
-                                    <option value="" selected>--Pilih--</option>
-                                    <option :value="item.id" v-for="(item, i) in itemsKabupaten" :key="i">{{item.nama}}</option>
-                                </select>
-                            </div>
-
-                            <div class="form-group col-md-4 m-0">
+                        <div class="form-row">
+                            <div class="form-group col-md-6 m-0">
                                 <label for="email" class="col-form-label s-12">Kecamatan</label>
                                 <select v-model="selectedKecamatan" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref" @change="getDesa">
                                     <option value="" selected>--Pilih--</option>
@@ -45,7 +35,7 @@
                                 </select>
                             </div>
 
-                            <div class="form-group col-md-4 m-0">
+                            <div class="form-group col-md-6 m-0">
                                 <label for="email" class="col-form-label s-12">Desa</label>
                                 <select v-model="selectedDesa" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref">
                                     <option value="" selected>--Pilih--</option>
@@ -84,8 +74,8 @@
                         </div>
                     </div>
                     <hr>
-                    <div class="card-body" v-if="loadingPrint == false">
-                        <button type="button" @click="postData" class="btn btn-primary btn-lg"><i class="icon-save mr-2"></i>Save Data</button>
+                    <div class="card-body pt-0" v-if="loadingPrint == false">
+                        <button type="button" @click="postData" class="btn btn-primary btn-sm btn-block mt-0"><i class="icon-save mr-2"></i>Simpan Data dan Cetak Surat Tanda Terima</button>
                     </div>
                 </div>
             </form>
@@ -182,13 +172,6 @@ export default {
                     this.itemsPpat = response.data
                 })
         },
-        getKabupaten: function () {
-            axios.
-            get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11')
-                .then(response => {
-                    this.itemsKabupaten = response.data.kota_kabupaten
-                })
-        },
         getKecamatan: function () {
             axios.
             get('https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten)
@@ -239,7 +222,7 @@ export default {
             } else {
                 this.boolSimpan == true
             }
-            
+
             if (this.kuasaBerkas == 'masyarakat') {
                 if (this.namaKuasa == '' || this.noHpKuasa == '') {
                     this.$notify({
@@ -267,7 +250,7 @@ export default {
                     this.boolSimpan == true
                 }
             }
-            
+
             if (this.boolSimpan) {
                 axios.
                 post('/berkas-mandiri', params)
@@ -311,9 +294,9 @@ export default {
                     })
             }
         },
-        getBerkasPrint: function(id) {
+        getBerkasPrint: function (id) {
             axios.
-            get('/berkas-mandiri-print/'+id, {
+            get('/berkas-mandiri-print/' + id, {
                     responseType: 'blob'
                 })
                 .then(response => {
@@ -333,7 +316,8 @@ export default {
         }
     },
     mounted() {
-        this.getKabupaten();
+        this.selectedKabupaten = this.$auth.user().kantah
+        this.getKecamatan();
         this.getKegiatan();
     }
 }

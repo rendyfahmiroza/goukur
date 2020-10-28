@@ -8,7 +8,7 @@ class HistoryUsers extends Model
 {
     protected $table = 'users_historys';
     protected $fillable = [
-        'user_id', 'berkas_id', 'no_surat_tugas', 'tanggal_pengukuran', 'status_proses'
+        'user_id', 'berkas_id', 'no_surat_tugas', 'tanggal_pengukuran', 'status_proses', 'catatan_proses'
     ];
 
     public function getUser()
