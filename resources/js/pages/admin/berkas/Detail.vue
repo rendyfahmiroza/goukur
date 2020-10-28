@@ -26,30 +26,23 @@
 
                             <!-- info row -->
                             <div class="row my-3 ">
-                                <div class="col-sm-9">
-                                    <span class="font-weight-bold">Alamat:</span>
+                                <div class="col-sm-7">
+                                    <span class="font-weight-bold">Data Pemohon:</span>
                                     <address>
-                                        <strong class="h5">{{namaPemohon}}.</strong><br>
+                                        <strong>Nama: {{namaPemohon}}</strong><br>
                                         Kabupaten: {{kabupaten}}<br>
                                         Kecamatan: {{kecamatan}}<br>
                                         Desa: {{desa}}, {{alamat}}<br>
                                         Kuasa: <strong>{{kuasaBerkas}}</strong><br>
                                         <span v-if="boolPpat">Nama Kuasa PPAT: {{namaKuasa}}<br></span>
                                         <span>No Hp Kuasa: {{noHpKuasa}}<br></span>
-                                        <p><strong>Berakhir Pada:</strong> {{manTanggalPengukuran}}</p>
                                     </address>
-                                </div>
-                                <!-- /.col -->
-                                <div class="col-sm-3">
+                                    <hr>
                                     <table>
                                         <tbody>
                                             <tr>
-                                                <td class="font-weight-normal">Tanggal:</td>
-                                                <td>{{tanggalPengukuran}}</td>
-                                            </tr>
-                                            <tr>
                                                 <td style="width:100px" class="font-weight-normal">Surat Tugas:</td>
-                                                <td>{{noSuratTugas}}</td>
+                                                <td><button @click="showSuratTugas" type="button" class="btn btn-outline-primary btn-xs">{{noSuratTugas}}</button></td>
                                             </tr>
                                             <tr>
                                                 <td style="width:100px" class="font-weight-normal">Petugas:</td>
@@ -57,14 +50,26 @@
                                             </tr>
                                         </tbody>
                                     </table>
+                                    <hr>
+                                    <span class="font-weight-bold">File Ukur (.Dwg):</span>
+                                    <ul class="mt-3 mailbox-attachments clearfix">
+                                        <li>
+                                            <div class="mailbox-attachment-info">
+                                                <a href="#" class="mailbox-attachment-name"><i class="icon-paperclip"></i>
+                                                    {{fileName}}</a>
+                                                <button @click="downloadFile(fileName)" class="btn btn-outline-success btn-xs float-right r-3"><i class="icon-document-file-dwg"></i></button>
+                                                <span class="mailbox-attachment-size">File Ukur
+                                                </span>
+                                            </div>
+                                        </li>
+                                    </ul>
                                 </div>
                                 <!-- /.col -->
-                            </div>
-                            <!-- /.row -->
-
-                            <div class="row">
-                                <!-- accepted payments column -->
-                                <div class="col-7">
+                                <div class="col-sm-5">
+                                    <address>
+                                    <strong class="text-info">Tanggal Pengukuran:</strong> {{tanggalPengukuran}}</br>
+                                    <strong class="text-danger">Tanggal Jatuh Tempo:</strong> {{manTanggalPengukuran}}</br>
+                                    </address>
                                     <p v-if="pembatalan != null" class="text-muted well well-sm no-shadow mt-3">
                                         <strong>Alasan Pembatalan: <h5 class="h5">{{pembatalan}}</h5></strong>
                                     </p>
@@ -79,25 +84,20 @@
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
-                                <!-- /.col -->
-                                <div v-if="fileName && $auth.user().hak_akses != 4" class="col-5 d-flex flex-row-reverse ">
-                                    <ul class="mailbox-attachments clearfix">
+                                    <ul v-if="verifikasi.length == 0" class="timeline mt-1">
                                         <li>
-                                            <span class="mailbox-attachment-icon"><i class="icon-document-file-dwg text-danger"></i></span>
-                                            <div class="mailbox-attachment-info">
-                                                <a href="#" class="mailbox-attachment-name"><i class="icon-paperclip"></i>
-                                                    {{fileName}}</a>
-                                                <button @click="downloadFile(fileName)" class="btn btn-success btn-xs float-right r-3"><i class="icon-cloud-download"></i></button>
-                                                <span class="mailbox-attachment-size">File Ukur
-                                                </span>
+                                            <i class="ion icon-user yellow"></i>
+                                            <div class="timeline-item  card">
+                                                <div class="card-header white">
+                                                    <h6>Belum ada Catatan oleh Operator<span class="float-right"><i class="ion icon-clock-o"></i> -</span></h6>
+                                                </div>
                                             </div>
                                         </li>
                                     </ul>
                                 </div>
+                                <!-- /.col -->
                             </div>
                             <!-- /.row -->
-
                             <!-- this row will not appear when printing -->
                             <div class="row no-print">
                                 <div class="col-12" v-if="statusProses != 'batal' && statusProses != 'selesai'">
@@ -360,27 +360,28 @@ export default {
                         // this.succ = true
                     }
                 })
+        },
+        showSuratTugas: function() {
+            axios.
+                get('/berkas-surat-tugas/' + this.$route.params.id, {
+                        responseType: 'blob'
+                    })
+                    .then(response => {
+                        const url = window.URL.createObjectURL(new Blob([response.data], {
+                            type: 'application/pdf'
+                        }));
+                        const link = document.createElement('a');
+                        link.href = url;
+                        link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
+                        document.body.appendChild(link);
+                        // link.click();
+                        this.srcPdf = link
+                        this.pdfView = true
+                        this.loaded = true
+                    })
         }
     },
     mounted() {
-        // axios.
-        // get('/berkas-surat-tugas/' + this.$route.params.id, {
-        //         responseType: 'blob'
-        //     })
-        //     .then(response => {
-        //         const url = window.URL.createObjectURL(new Blob([response.data], {
-        //             type: 'application/pdf'
-        //         }));
-        //         const link = document.createElement('a');
-        //         link.href = url;
-        //         link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
-        //         document.body.appendChild(link);
-        //         // link.click();
-        //         this.srcPdf = link
-        //         this.pdfView = true
-        //         this.loaded = true
-        //     })
-
         this.id = this.$route.params.id
         this.getData()
     }

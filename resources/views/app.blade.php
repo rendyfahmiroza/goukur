@@ -6,7 +6,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <link rel="icon" href="{{ asset('goukur/img/basic/favicon.ico') }}" type="image/x-icon">
-    <title>GO UKUR V.1</title>
+    <title>GO-UKUR BPN ACEH</title>
     <!-- CSS -->
     <link rel="stylesheet" href="{{ asset('goukur/css/app.css') }}">
 

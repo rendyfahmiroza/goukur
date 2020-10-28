@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Berkas;
+use App\Regencies;
 use Illuminate\Http\Request;
 use Ixudra\Curl\Facades\Curl;
 
@@ -59,17 +60,18 @@ class DashboardController extends Controller
 
         }
 
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11')->asJsonResponse()->get();
+        $regency = Regencies::where('province_id', '11')->get();
+        // echo $regency;
         
         $data_proses = array();
         $data_selesai = array();
         $data_jatuh_tempo = array();
         $data_kabupaten = array();
         $data_tertinggi = array();
-        foreach ($response->kota_kabupaten as $value) {
+        foreach ($regency as $value) {
 
             // Simpan data kabupaten
-            array_push($data_kabupaten, $value->nama);
+            array_push($data_kabupaten, $value->name);
 
             // Ambil berkas per Kabupaten
             $berkas = Berkas::where('kabupaten_id', $value->id)->where('status_proses','<>','baru-mandiri')->get();
@@ -106,7 +108,7 @@ class DashboardController extends Controller
             }
             
             // Data Terbanyak
-            $data_per_kab['kabupaten'] = $value->nama;
+            $data_per_kab['kabupaten'] = $value->name;
             $data_per_kab['selesai'] = $bSelesai;
             $data_per_kab['total'] = $bTotalBerkas > 0 ? number_format(($bSelesai / $bTotalBerkas) * 100, 2) : 0;
 

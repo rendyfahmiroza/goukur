@@ -12,13 +12,13 @@
                                 </div>
                                 <div>
                                     <div>
-                                        <strong>{{item.nama_pemohon}}</strong>
+                                        <strong>Pemohon: {{item.nama_pemohon}}</strong>
                                     </div>
-                                    <small class="d-none d-md-block">No. Telepon: {{item.no_hp_kuasa}} | Petugas Ukur: {{item.petugas_ukur_id}}
+                                    <small class="d-none d-md-block"><a  href="#" class="badge badge-success" role="button" @click="downloadFile(item.fileDwg)">File DWG: Download {{item.fileDwg}}</a>
                                     </small>
                                 </div>
                             </td>
-                            <td>
+                            <td align="right">
                                 <span v-if="item.status_proses == 'selesai'">
                                     <span class="icon icon-circle s-12  mr-2 text-success"></span> Selesai
                                 </span>

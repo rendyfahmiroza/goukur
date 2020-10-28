@@ -3336,158 +3336,13 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      itemsPetugas: []
+      itemsPetugas: [],
+      countVerifikasi: 0,
+      countBaru: 0,
+      countProses: 0
     };
   },
   computed: {
@@ -3522,12 +3377,15 @@ __webpack_require__.r(__webpack_exports__);
     }
   },
   mounted: function mounted() {
-    console.log(this.$auth); // Get Petugas
-    // axios.get('/petugas')
-    //     .then(response => {
-    //         console.log(response)
-    //         this.itemsPetugas = response.data
-    //     })
+    var _this = this;
+
+    // console.log(this.$auth)
+    axios.get('/count-berkas').then(function (response) {
+      console.log(response);
+      _this.countVerifikasi = response.data.verifikasi;
+      _this.countBaru = response.data.baru;
+      _this.countProses = response.data.proses; // this.itemsPetugas = response.data
+    });
   }
 });
 
@@ -5475,26 +5333,29 @@ __webpack_require__.r(__webpack_exports__);
           // this.succ = true
         }
       });
+    },
+    showSuratTugas: function showSuratTugas() {
+      var _this5 = this;
+
+      axios.get('/berkas-surat-tugas/' + this.$route.params.id, {
+        responseType: 'blob'
+      }).then(function (response) {
+        var url = window.URL.createObjectURL(new Blob([response.data], {
+          type: 'application/pdf'
+        }));
+        var link = document.createElement('a');
+        link.href = url;
+        link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
+
+        document.body.appendChild(link); // link.click();
+
+        _this5.srcPdf = link;
+        _this5.pdfView = true;
+        _this5.loaded = true;
+      });
     }
   },
   mounted: function mounted() {
-    // axios.
-    // get('/berkas-surat-tugas/' + this.$route.params.id, {
-    //         responseType: 'blob'
-    //     })
-    //     .then(response => {
-    //         const url = window.URL.createObjectURL(new Blob([response.data], {
-    //             type: 'application/pdf'
-    //         }));
-    //         const link = document.createElement('a');
-    //         link.href = url;
-    //         link.setAttribute('download', 'remaining_fee.pdf'); //or any other extension
-    //         document.body.appendChild(link);
-    //         // link.click();
-    //         this.srcPdf = link
-    //         this.pdfView = true
-    //         this.loaded = true
-    //     })
     this.id = this.$route.params.id;
     this.getData();
   }
@@ -67744,7 +67605,27 @@ var render = function() {
                                             "icon icon icon-fiber_new s-24"
                                         }),
                                         _vm._v(" "),
-                                        _c("span", [_vm._v("Berkas Baru")])
+                                        _c("span", [
+                                          _vm._v("Berkas Baru "),
+                                          _vm.countBaru > 0
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-danger rounded-circle ml-3",
+                                                  staticStyle: {
+                                                    padding: "0",
+                                                    "font-size": "10px",
+                                                    width: "15px",
+                                                    height: "15px",
+                                                    "line-height": "15px",
+                                                    "vertical-align": "middle"
+                                                  }
+                                                },
+                                                [_vm._v(_vm._s(_vm.countBaru))]
+                                              )
+                                            : _vm._e()
+                                        ])
                                       ]
                                     )
                                   ],
@@ -67768,33 +67649,31 @@ var render = function() {
                                             "icon icon icon-package s-24"
                                         }),
                                         _vm._v(" "),
-                                        _c("span", [_vm._v("Berkas Proses")])
-                                      ]
-                                    )
-                                  ],
-                                  1
-                                )
-                              : _vm._e(),
-                            _vm._v(" "),
-                            _vm.$auth.user().hak_akses == 1 ||
-                            _vm.$auth.user().hak_akses == 2
-                              ? _c(
-                                  "li",
-                                  [
-                                    _c(
-                                      "router-link",
-                                      {
-                                        attrs: {
-                                          to: { name: "berkas-tertunda" }
-                                        }
-                                      },
-                                      [
-                                        _c("i", {
-                                          staticClass:
-                                            "icon icon icon-sync_problem s-24"
-                                        }),
-                                        _vm._v(" "),
-                                        _c("span", [_vm._v("Berkas Tertunda")])
+                                        _c("span", [
+                                          _vm._v("Berkas Proses "),
+                                          _vm.countProses > 0
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-danger rounded-circle ml-3",
+                                                  staticStyle: {
+                                                    padding: "0",
+                                                    "font-size": "10px",
+                                                    width: "15px",
+                                                    height: "15px",
+                                                    "line-height": "15px",
+                                                    "vertical-align": "middle"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(_vm.countProses)
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
+                                        ])
                                       ]
                                     )
                                   ],
@@ -67821,8 +67700,56 @@ var render = function() {
                                         }),
                                         _vm._v(" "),
                                         _c("span", [
-                                          _vm._v("Berkas Verifikasi")
+                                          _vm._v("Berkas Verifikasi "),
+                                          _vm.countVerifikasi > 0
+                                            ? _c(
+                                                "span",
+                                                {
+                                                  staticClass:
+                                                    "badge badge-danger rounded-circle ml-3",
+                                                  staticStyle: {
+                                                    padding: "0",
+                                                    "font-size": "10px",
+                                                    width: "15px",
+                                                    height: "15px",
+                                                    "line-height": "15px",
+                                                    "vertical-align": "middle"
+                                                  }
+                                                },
+                                                [
+                                                  _vm._v(
+                                                    _vm._s(_vm.countVerifikasi)
+                                                  )
+                                                ]
+                                              )
+                                            : _vm._e()
                                         ])
+                                      ]
+                                    )
+                                  ],
+                                  1
+                                )
+                              : _vm._e(),
+                            _vm._v(" "),
+                            _vm.$auth.user().hak_akses == 1 ||
+                            _vm.$auth.user().hak_akses == 2
+                              ? _c(
+                                  "li",
+                                  [
+                                    _c(
+                                      "router-link",
+                                      {
+                                        attrs: {
+                                          to: { name: "berkas-tertunda" }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass:
+                                            "icon icon icon-sync_problem s-24"
+                                        }),
+                                        _vm._v(" "),
+                                        _c("span", [_vm._v("Berkas Tertunda")])
                                       ]
                                     )
                                   ],
@@ -67869,7 +67796,7 @@ var render = function() {
                                       [
                                         _c("i", {
                                           staticClass:
-                                            "icon icon icon-note-checked s-24"
+                                            "icon icon icon-note-remove s-24"
                                         }),
                                         _vm._v(" "),
                                         _c("span", [_vm._v("Berkas Batal")])
@@ -68164,8 +68091,6 @@ var render = function() {
         1
       ),
       _vm._v(" "),
-      _vm._m(6),
-      _vm._v(" "),
       _c("div", { staticClass: "control-sidebar-bg shadow white fixed" })
     ])
   ])
@@ -68259,334 +68184,6 @@ var staticRenderFns = [
       },
       [_c("i", { staticClass: "icon-more_vert " })]
     )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("aside", { staticClass: "control-sidebar fixed white " }, [
-      _c("div", { staticClass: "slimScroll" }, [
-        _c("div", { staticClass: "sidebar-header" }, [
-          _c("h4", [_vm._v("Activity List")]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "paper-nav-toggle  active",
-              attrs: { href: "#", "data-toggle": "control-sidebar" }
-            },
-            [_c("i")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-3" }, [
-          _c("div", [
-            _c("div", { staticClass: "my-3" }, [
-              _c("small", [_vm._v("25% Complete")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "progress", staticStyle: { height: "3px" } },
-                [
-                  _c("div", {
-                    staticClass: "progress-bar bg-success",
-                    staticStyle: { width: "25%" },
-                    attrs: {
-                      role: "progressbar",
-                      "aria-valuenow": "25",
-                      "aria-valuemin": "0",
-                      "aria-valuemax": "100"
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "my-3" }, [
-              _c("small", [_vm._v("45% Complete")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "progress", staticStyle: { height: "3px" } },
-                [
-                  _c("div", {
-                    staticClass: "progress-bar bg-info",
-                    staticStyle: { width: "45%" },
-                    attrs: {
-                      role: "progressbar",
-                      "aria-valuenow": "45",
-                      "aria-valuemin": "0",
-                      "aria-valuemax": "100"
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "my-3" }, [
-              _c("small", [_vm._v("60% Complete")]),
-              _vm._v(
-                "\n                            `\n                            "
-              ),
-              _c(
-                "div",
-                { staticClass: "progress", staticStyle: { height: "3px" } },
-                [
-                  _c("div", {
-                    staticClass: "progress-bar bg-warning",
-                    staticStyle: { width: "60%" },
-                    attrs: {
-                      role: "progressbar",
-                      "aria-valuenow": "60",
-                      "aria-valuemin": "0",
-                      "aria-valuemax": "100"
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "my-3" }, [
-              _c("small", [_vm._v("75% Complete")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "progress", staticStyle: { height: "3px" } },
-                [
-                  _c("div", {
-                    staticClass: "progress-bar bg-danger",
-                    staticStyle: { width: "75%" },
-                    attrs: {
-                      role: "progressbar",
-                      "aria-valuenow": "75",
-                      "aria-valuemin": "0",
-                      "aria-valuemax": "100"
-                    }
-                  })
-                ]
-              )
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "my-3" }, [
-              _c("small", [_vm._v("100% Complete")]),
-              _vm._v(" "),
-              _c(
-                "div",
-                { staticClass: "progress", staticStyle: { height: "3px" } },
-                [
-                  _c("div", {
-                    staticClass: "progress-bar",
-                    staticStyle: { width: "100%" },
-                    attrs: {
-                      role: "progressbar",
-                      "aria-valuenow": "100",
-                      "aria-valuemin": "0",
-                      "aria-valuemax": "100"
-                    }
-                  })
-                ]
-              )
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-3 bg-primary text-white" }, [
-          _c("div", { staticClass: "row" }, [
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("h5", { staticClass: "font-weight-normal s-14" }, [
-                _vm._v("Sodium")
-              ]),
-              _vm._v(" "),
-              _c("span", { staticClass: "font-weight-lighter text-primary" }, [
-                _vm._v("Spark Bar")
-              ]),
-              _vm._v(" "),
-              _c("div", [
-                _vm._v(" Oxygen\n                                "),
-                _c("span", { staticClass: "text-primary" }, [
-                  _c("i", { staticClass: "icon icon-arrow_downward" }),
-                  _vm._v(" 67%")
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "col-md-6" }, [
-              _c("canvas", {
-                attrs: {
-                  width: "100",
-                  height: "70",
-                  "data-chart": "spark",
-                  "data-chart-type": "bar",
-                  "data-dataset":
-                    "[[28,68,41,43,96,45,100,28,68,41,43,96,45,100,28,68,41,43,96,45,100,28,68,41,43,96,45,100]]",
-                  "data-labels":
-                    "['a','b','c','d','e','f','g','h','i','j','k','l','m','n','a','b','c','d','e','f','g','h','i','j','k','l','m','n']"
-                }
-              })
-            ])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "table-responsive" }, [
-          _c(
-            "table",
-            {
-              staticClass:
-                "table table-hover mb-0 ps-container ps-theme-default",
-              attrs: { id: "recent-orders" }
-            },
-            [
-              _c("tbody", [
-                _c("tr", [
-                  _c("td", [
-                    _c("a", { attrs: { href: "#" } }, [_vm._v("INV-281281")])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("span", { staticClass: "badge badge-success" }, [
-                      _vm._v("Paid")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("$ 1228.28")])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [
-                    _c("a", { attrs: { href: "#" } }, [_vm._v("INV-01112")])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("span", { staticClass: "badge badge-warning" }, [
-                      _vm._v("Overdue")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("$ 5685.28")])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [
-                    _c("a", { attrs: { href: "#" } }, [_vm._v("INV-281012")])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("span", { staticClass: "badge badge-success" }, [
-                      _vm._v("Paid")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("$ 152.28")])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [
-                    _c("a", { attrs: { href: "#" } }, [_vm._v("INV-01112")])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("span", { staticClass: "badge badge-warning" }, [
-                      _vm._v("Overdue")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("$ 5685.28")])
-                ]),
-                _vm._v(" "),
-                _c("tr", [
-                  _c("td", [
-                    _c("a", { attrs: { href: "#" } }, [_vm._v("INV-281012")])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c("span", { staticClass: "badge badge-success" }, [
-                      _vm._v("Paid")
-                    ])
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v("$ 152.28")])
-                ])
-              ])
-            ]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "sidebar-header" }, [
-          _c("h4", [_vm._v("Activity")]),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "paper-nav-toggle  active",
-              attrs: { href: "#", "data-toggle": "control-sidebar" }
-            },
-            [_c("i")]
-          )
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "p-4" }, [
-          _c("div", { staticClass: "activity-item activity-primary" }, [
-            _c("div", { staticClass: "activity-content" }, [
-              _c("small", { staticClass: "text-muted" }, [
-                _c("i", { staticClass: "icon icon-user position-left" }),
-                _vm._v(" 5 mins ago\n                            ")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet conse ctetur which ascing elit users."
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "activity-item activity-danger" }, [
-            _c("div", { staticClass: "activity-content" }, [
-              _c("small", { staticClass: "text-muted" }, [
-                _c("i", { staticClass: "icon icon-user position-left" }),
-                _vm._v(" 8 mins ago\n                            ")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit ametcon the sectetur that ascing elit users."
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "activity-item activity-success" }, [
-            _c("div", { staticClass: "activity-content" }, [
-              _c("small", { staticClass: "text-muted" }, [
-                _c("i", { staticClass: "icon icon-user position-left" }),
-                _vm._v(" 10 mins ago\n                            ")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet cons the ecte tur and adip ascing elit users."
-                )
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "activity-item activity-warning" }, [
-            _c("div", { staticClass: "activity-content" }, [
-              _c("small", { staticClass: "text-muted" }, [
-                _c("i", { staticClass: "icon icon-user position-left" }),
-                _vm._v(" 12 mins ago\n                            ")
-              ]),
-              _vm._v(" "),
-              _c("p", [
-                _vm._v(
-                  "Lorem ipsum dolor sit amet consec tetur adip ascing elit users."
-                )
-              ])
-            ])
-          ])
-        ])
-      ])
-    ])
   }
 ]
 render._withStripped = true
@@ -70621,7 +70218,9 @@ var render = function() {
                                 _c("div", [
                                   _c("div", [
                                     _c("strong", [
-                                      _vm._v(_vm._s(item.nama_pemohon))
+                                      _vm._v(
+                                        "Pemohon: " + _vm._s(item.nama_pemohon)
+                                      )
                                     ])
                                   ]),
                                   _vm._v(" "),
@@ -70629,19 +70228,32 @@ var render = function() {
                                     "small",
                                     { staticClass: "d-none d-md-block" },
                                     [
-                                      _vm._v(
-                                        "No. Telepon: " +
-                                          _vm._s(item.no_hp_kuasa) +
-                                          " | Petugas Ukur: " +
-                                          _vm._s(item.petugas_ukur_id) +
-                                          "\n                                    "
+                                      _c(
+                                        "a",
+                                        {
+                                          staticClass: "badge badge-success",
+                                          attrs: { href: "#", role: "button" },
+                                          on: {
+                                            click: function($event) {
+                                              return _vm.downloadFile(
+                                                item.fileDwg
+                                              )
+                                            }
+                                          }
+                                        },
+                                        [
+                                          _vm._v(
+                                            "File DWG: Download " +
+                                              _vm._s(item.fileDwg)
+                                          )
+                                        ]
                                       )
                                     ]
                                   )
                                 ])
                               ]),
                               _vm._v(" "),
-                              _c("td", [
+                              _c("td", { attrs: { align: "right" } }, [
                                 item.status_proses == "selesai"
                                   ? _c("span", [
                                       _c("span", {
@@ -71474,14 +71086,14 @@ var render = function() {
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row my-3 " }, [
-                        _c("div", { staticClass: "col-sm-9" }, [
+                        _c("div", { staticClass: "col-sm-7" }, [
                           _c("span", { staticClass: "font-weight-bold" }, [
-                            _vm._v("Alamat:")
+                            _vm._v("Data Pemohon:")
                           ]),
                           _vm._v(" "),
                           _c("address", [
-                            _c("strong", { staticClass: "h5" }, [
-                              _vm._v(_vm._s(_vm.namaPemohon) + ".")
+                            _c("strong", [
+                              _vm._v("Nama: " + _vm._s(_vm.namaPemohon))
                             ]),
                             _c("br"),
                             _vm._v(
@@ -71519,30 +71131,13 @@ var render = function() {
                             _c("span", [
                               _vm._v("No Hp Kuasa: " + _vm._s(_vm.noHpKuasa)),
                               _c("br")
-                            ]),
-                            _vm._v(" "),
-                            _c("p", [
-                              _c("strong", [_vm._v("Berakhir Pada:")]),
-                              _vm._v(" " + _vm._s(_vm.manTanggalPengukuran))
                             ])
-                          ])
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-sm-3" }, [
+                          ]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
                           _c("table", [
                             _c("tbody", [
-                              _c("tr", [
-                                _c(
-                                  "td",
-                                  { staticClass: "font-weight-normal" },
-                                  [_vm._v("Tanggal:")]
-                                ),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(_vm._s(_vm.tanggalPengukuran))
-                                ])
-                              ]),
-                              _vm._v(" "),
                               _c("tr", [
                                 _c(
                                   "td",
@@ -71553,7 +71148,18 @@ var render = function() {
                                   [_vm._v("Surat Tugas:")]
                                 ),
                                 _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(_vm.noSuratTugas))])
+                                _c("td", [
+                                  _c(
+                                    "button",
+                                    {
+                                      staticClass:
+                                        "btn btn-outline-primary btn-xs",
+                                      attrs: { type: "button" },
+                                      on: { click: _vm.showSuratTugas }
+                                    },
+                                    [_vm._v(_vm._s(_vm.noSuratTugas))]
+                                  )
+                                ])
                               ]),
                               _vm._v(" "),
                               _c("tr", [
@@ -71569,12 +71175,95 @@ var render = function() {
                                 _c("td", [_vm._v(_vm._s(_vm.petugas))])
                               ])
                             ])
-                          ])
-                        ])
-                      ]),
-                      _vm._v(" "),
-                      _c("div", { staticClass: "row" }, [
-                        _c("div", { staticClass: "col-7" }, [
+                          ]),
+                          _vm._v(" "),
+                          _c("hr"),
+                          _vm._v(" "),
+                          _c("span", { staticClass: "font-weight-bold" }, [
+                            _vm._v("File Ukur (.Dwg):")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "ul",
+                            {
+                              staticClass: "mt-3 mailbox-attachments clearfix"
+                            },
+                            [
+                              _c("li", [
+                                _c(
+                                  "div",
+                                  { staticClass: "mailbox-attachment-info" },
+                                  [
+                                    _c(
+                                      "a",
+                                      {
+                                        staticClass: "mailbox-attachment-name",
+                                        attrs: { href: "#" }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "icon-paperclip"
+                                        }),
+                                        _vm._v(
+                                          "\n                                                    " +
+                                            _vm._s(_vm.fileName)
+                                        )
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "button",
+                                      {
+                                        staticClass:
+                                          "btn btn-outline-success btn-xs float-right r-3",
+                                        on: {
+                                          click: function($event) {
+                                            return _vm.downloadFile(
+                                              _vm.fileName
+                                            )
+                                          }
+                                        }
+                                      },
+                                      [
+                                        _c("i", {
+                                          staticClass: "icon-document-file-dwg"
+                                        })
+                                      ]
+                                    ),
+                                    _vm._v(" "),
+                                    _c(
+                                      "span",
+                                      {
+                                        staticClass: "mailbox-attachment-size"
+                                      },
+                                      [
+                                        _vm._v(
+                                          "File Ukur\n                                                "
+                                        )
+                                      ]
+                                    )
+                                  ]
+                                )
+                              ])
+                            ]
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("div", { staticClass: "col-sm-5" }, [
+                          _c("address", [
+                            _c("strong", { staticClass: "text-info" }, [
+                              _vm._v("Tanggal Pengukuran:")
+                            ]),
+                            _vm._v(" " + _vm._s(_vm.tanggalPengukuran)),
+                            _c("br"),
+                            _vm._v(" "),
+                            _c("strong", { staticClass: "text-danger" }, [
+                              _vm._v("Tanggal Jatuh Tempo:")
+                            ]),
+                            _vm._v(" " + _vm._s(_vm.manTanggalPengukuran)),
+                            _c("br")
+                          ]),
+                          _vm._v(" "),
                           _vm.pembatalan != null
                             ? _c(
                                 "p",
@@ -71647,88 +71336,14 @@ var render = function() {
                                 }),
                                 0
                               )
+                            : _vm._e(),
+                          _vm._v(" "),
+                          _vm.verifikasi.length == 0
+                            ? _c("ul", { staticClass: "timeline mt-1" }, [
+                                _vm._m(1)
+                              ])
                             : _vm._e()
-                        ]),
-                        _vm._v(" "),
-                        _vm.fileName && _vm.$auth.user().hak_akses != 4
-                          ? _c(
-                              "div",
-                              { staticClass: "col-5 d-flex flex-row-reverse " },
-                              [
-                                _c(
-                                  "ul",
-                                  {
-                                    staticClass: "mailbox-attachments clearfix"
-                                  },
-                                  [
-                                    _c("li", [
-                                      _vm._m(1),
-                                      _vm._v(" "),
-                                      _c(
-                                        "div",
-                                        {
-                                          staticClass: "mailbox-attachment-info"
-                                        },
-                                        [
-                                          _c(
-                                            "a",
-                                            {
-                                              staticClass:
-                                                "mailbox-attachment-name",
-                                              attrs: { href: "#" }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass: "icon-paperclip"
-                                              }),
-                                              _vm._v(
-                                                "\n                                                    " +
-                                                  _vm._s(_vm.fileName)
-                                              )
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "button",
-                                            {
-                                              staticClass:
-                                                "btn btn-success btn-xs float-right r-3",
-                                              on: {
-                                                click: function($event) {
-                                                  return _vm.downloadFile(
-                                                    _vm.fileName
-                                                  )
-                                                }
-                                              }
-                                            },
-                                            [
-                                              _c("i", {
-                                                staticClass:
-                                                  "icon-cloud-download"
-                                              })
-                                            ]
-                                          ),
-                                          _vm._v(" "),
-                                          _c(
-                                            "span",
-                                            {
-                                              staticClass:
-                                                "mailbox-attachment-size"
-                                            },
-                                            [
-                                              _vm._v(
-                                                "File Ukur\n                                                "
-                                              )
-                                            ]
-                                          )
-                                        ]
-                                      )
-                                    ])
-                                  ]
-                                )
-                              ]
-                            )
-                          : _vm._e()
+                        ])
                       ]),
                       _vm._v(" "),
                       _c("div", { staticClass: "row no-print" }, [
@@ -71963,8 +71578,20 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("span", { staticClass: "mailbox-attachment-icon" }, [
-      _c("i", { staticClass: "icon-document-file-dwg text-danger" })
+    return _c("li", [
+      _c("i", { staticClass: "ion icon-user yellow" }),
+      _vm._v(" "),
+      _c("div", { staticClass: "timeline-item  card" }, [
+        _c("div", { staticClass: "card-header white" }, [
+          _c("h6", [
+            _vm._v("Belum ada Catatan oleh Operator"),
+            _c("span", { staticClass: "float-right" }, [
+              _c("i", { staticClass: "ion icon-clock-o" }),
+              _vm._v(" -")
+            ])
+          ])
+        ])
+      ])
     ])
   }
 ]

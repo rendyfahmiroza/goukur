@@ -7,6 +7,10 @@ use App\HistoryUsers;
 use App\Berkas;
 use App\Kantor;
 use App\Notifikasi;
+use App\Provinces;
+use App\Regencies;
+use App\Districts;
+use App\Villages;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Ixudra\Curl\Facades\Curl;
@@ -208,14 +212,19 @@ class BerkasController extends Controller
         
         // Manipulasi Data
         $berkas->man_tanggal_pengukuran = \Carbon\Carbon::parse($berkas->tanggal_pengukuran)->translatedFormat('l, d F Y');
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kota/'.$berkas->kabupaten_id)->asJsonResponse()->get();
-        $berkas->man_kabupaten_id = $response->nama;
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kecamatan/'.$berkas->kecamatan_id)->asJsonResponse()->get();
-        $berkas->man_kecamatan_id = $response->nama;
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kelurahan/'.$berkas->desa_id)->asJsonResponse()->get();
-        $berkas->man_desa_id = $response->nama;
-        $petugas = $history->getUser->name;
+        
+        // Manipulasi Lokasi
+        $regency = Regencies::find($berkas->kabupaten_id);
+        $berkas->man_kabupaten_id = $regency->name;
 
+        $district = Districts::find($berkas->kecamatan_id);
+        $berkas->man_kecamatan_id = $district->name;
+
+        $village = Villages::find($berkas->desa_id);
+        $berkas->man_desa_id = $village->name;
+
+        // Manipulasi Petugas
+        $petugas = $history->getUser->name;
         $berkas->man_petugas_ukur = $petugas;
         $berkas->man_tanggal_pengukuran_berakhir = $result_date;
 
@@ -466,13 +475,16 @@ class BerkasController extends Controller
         // dd($data);
         $data->man_tanggal_pengukuran = \Carbon\Carbon::parse($history->tanggal_pengukuran)->translatedFormat('l, d F Y');
         $data->man_tanggal_pengukuran_selesai = \Carbon\Carbon::parse($history->tanggal_pengukuran)->addDays(1)->translatedFormat('l, d F Y');
-    
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kelurahan/'.$data->desa_id)->asJsonResponse()->get();
-        $data->man_desa = $response->nama;
 
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kecamatan/'.$data->kecamatan_id)->asJsonResponse()->get();
+        // Manipulasi Lokasi
+        $district = Districts::find($data->kecamatan_id);
+        $data->man_kecamatan = $district->name;
+
+        $village = Villages::find($data->desa_id);
+        $data->man_desa = $village->name;
+
+        // Data Kantor
         $data->no_surat_tugas = $history->no_surat_tugas;
-        $data->man_kecamatan = $response->nama;
         $data->nama_kantor = $data->kantor->nama;
         $data->nama_kasi = $data->kantor->kasi;
         $data->alamat_kantor = $data->kantor->alamat;
@@ -497,11 +509,14 @@ class BerkasController extends Controller
         // dd($id);
         $data = Berkas::where('id', $id)->first();
     
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kelurahan/'.$data->desa_id)->asJsonResponse()->get();
-        $data->man_desa = $response->nama;
+        // Manipulasi Lokasi
+        $district = Districts::find($berkas->kecamatan_id);
+        $berkas->man_kecamatan = $district->name;
 
-        $response = Curl::to('https://dev.farizdotid.com/api/daerahindonesia/kecamatan/'.$data->kecamatan_id)->asJsonResponse()->get();
-        $data->man_kecamatan = $response->nama;
+        $village = Villages::find($berkas->desa_id);
+        $berkas->man_desa = $village->name;
+
+        // Data Kantor
         $data->nama_kantor = $data->kantor->nama;
         $data->alamat_kantor = $data->kantor->alamat;
         $data->telp_kantor = $data->kantor->no_telepon;
@@ -748,6 +763,25 @@ class BerkasController extends Controller
         $berkas = Berkas::find($id);
         $berkas->delete();
         return response()->json($berkas, 200);
+    }
+
+    /**
+     * Count data
+     *
+     * @param  \App\Berkas  $berkas
+     * @return \Illuminate\Http\Response
+     */
+    public function count_berkas()
+    {
+        $verifikasi = Berkas::where('status_proses','verifikasi')->count();
+        $baru = Berkas::where('status_proses','baru-mandiri')->count();
+        $proses = Berkas::where('status_proses','proses')->count();
+
+        $json = array();
+        $json['verifikasi'] = $verifikasi;
+        $json['baru'] = $baru;
+        $json['proses'] = $proses;
+        return response()->json($json, 200);
     }
 
     //REUSABLE CURL AGAR TIDAK MENULISKAN CODE YANG SAMA BERULANG KALI

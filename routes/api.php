@@ -67,6 +67,7 @@ Route::put('konfirmasi-berkas/{id}','BerkasController@konfirmasi_berkas')->name(
 Route::put('pembatalan-berkas/{id}','BerkasController@pembatalan_berkas')->name('berkas.pembatalan_berkas');
 Route::put('penugasan/{id}','BerkasController@penugasan')->name('berkas.penugasan');
 Route::post('selesai-berkas/{id}','BerkasController@selesai_berkas')->name('berkas.selesai_berkas');
+Route::get('count-berkas', 'BerkasController@count_berkas')->name('berkas.count_berkas');
 
 // Download FILE
 Route::get('download/{file}', 'FileController@downloadFile')->name('file.downloadFile');
