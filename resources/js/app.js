@@ -20,7 +20,7 @@ Vue.use(VueRouter)
 
 // Set Vue authentication
 Vue.use(VueAxios, axios)
-axios.defaults.baseURL = `https://goukur.atrbpnaceh.com/api`
+axios.defaults.baseURL = `/api`
 Vue.use(VueAuth, auth)
 
 Vue.use(Notifications)
