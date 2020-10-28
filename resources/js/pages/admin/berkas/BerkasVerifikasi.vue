@@ -131,14 +131,14 @@ export default {
         downloadFile(file) {
             axios.get('/download/' +file, {responseType: 'blob'})
             .then(resp => {
-                var fileURL = window.URL.createObjectURL(new Blob([resp.data]));
-                var fileLink = document.createElement('a');
-
-                fileLink.href = fileURL;
-                fileLink.setAttribute('download', 'file.pdf');
-                document.body.appendChild(fileLink);
-
-                fileLink.click();
+                let blob = new Blob([resp.data], {
+                    type: 'application/*'
+                })
+                let link = document.createElement('a')
+                link.href = window.URL.createObjectURL(blob)
+                link.download = file
+                link._target = 'blank'
+                link.click();
             })  
             .catch(error => {
                 console.log(error);

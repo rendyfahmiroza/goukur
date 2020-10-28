@@ -4944,12 +4944,14 @@ __webpack_require__.r(__webpack_exports__);
       axios.get('/download/' + file, {
         responseType: 'blob'
       }).then(function (resp) {
-        var fileURL = window.URL.createObjectURL(new Blob([resp.data]));
-        var fileLink = document.createElement('a');
-        fileLink.href = fileURL;
-        fileLink.setAttribute('download', 'file.pdf');
-        document.body.appendChild(fileLink);
-        fileLink.click();
+        var blob = new Blob([resp.data], {
+          type: 'application/*'
+        });
+        var link = document.createElement('a');
+        link.href = window.URL.createObjectURL(blob);
+        link.download = file;
+        link._target = 'blank';
+        link.click();
       })["catch"](function (error) {
         console.log(error);
       });
