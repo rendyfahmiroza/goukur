@@ -93,8 +93,9 @@
                                             <label class="form-label">* Hak Akses</label>
                                             <select v-model="hak_akses" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref" required>
                                                 <option value="" selected>--Pilih--</option>
-                                                <option value="1">Administrator</option>
-                                                <option value="2">Operator Kantah</option>
+                                                <option value="1">Admin Kanwil</option>
+                                                <option value="2">Verifikator Kantah</option>
+                                                <option value="3">Operator Kantah</option>
                                             </select>
                                         </div>
                                     </div>
