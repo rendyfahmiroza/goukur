@@ -95,7 +95,7 @@
                                                 <option value="" selected>--Pilih--</option>
                                                 <option value="1">Admin Kanwil</option>
                                                 <option value="2">Verifikator Kantah</option>
-                                                <option value="3">Operator Kantah</option>
+                                                <option value="5">Operator Kantah</option>
                                             </select>
                                         </div>
                                     </div>
