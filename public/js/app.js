@@ -8037,6 +8037,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     var _ref;
@@ -77494,10 +77495,14 @@ var render = function() {
                             ),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "1" } }, [
-                              _vm._v("Administrator")
+                              _vm._v("Admin Kanwil")
                             ]),
                             _vm._v(" "),
                             _c("option", { attrs: { value: "2" } }, [
+                              _vm._v("Verifikator Kantah")
+                            ]),
+                            _vm._v(" "),
+                            _c("option", { attrs: { value: "5" } }, [
                               _vm._v("Operator Kantah")
                             ])
                           ]
@@ -77966,7 +77971,7 @@ var render = function() {
                               _vm._v("Verifikator Kantah")
                             ]),
                             _vm._v(" "),
-                            _c("option", { attrs: { value: "3" } }, [
+                            _c("option", { attrs: { value: "5" } }, [
                               _vm._v("Operator Kantah")
                             ])
                           ]
