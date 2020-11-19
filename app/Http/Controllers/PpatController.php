@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\User;
 use App\Berkas;
+use App\HistoryUsers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -102,8 +103,12 @@ class PpatController extends Controller
             $item['kabupaten_id'] = $value->kabupaten_id;
             $item['kecamatan_id'] = $value->kecamatan_id;
             $item['desa_id'] = $value->desa_id;
-            $item['petugas_ukur'] = $value->pengguna->name;
-            $item['petugas_ukur_nomor'] = $value->pengguna->no_telepon;
+
+            $history = HistoryUsers::where('berkas_id', $value->id)->where('status_proses', 'proses')->first();
+
+            $item['petugas_ukur'] = $history->getUser->name;
+            $item['petugas_ukur_nomor'] = $history->getUser->no_telepon;
+
             $item['alamat'] = $value->alamat;
             $item['catatan'] = $value->catatan;
             $item['tanggal_pengukuran'] = $result_date;

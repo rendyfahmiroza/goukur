@@ -130,40 +130,43 @@ class PetugasController extends Controller
         foreach ($berkas as $value) {
             $item = array();
 
-            // Manipulasi Tanggal untuk mengetahui jatuh tempo
-            $start_date = \Carbon\Carbon::now();
-            $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran);
-            $result_date = $start_date->diffInDays($expired_date, false);
+            if ($value->getBerkas != null) {
+                // Manipulasi Tanggal untuk mengetahui jatuh tempo
+                $start_date = \Carbon\Carbon::now();
+                $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran);
+                $result_date = $start_date->diffInDays($expired_date, false);
 
-            $item['id'] = $value->berkas_id;
-            $item['nama_pemohon'] = $value->getBerkas->nama_pemohon;
-            $item['nomor_hak'] = $value->getBerkas->nomor_hak;
-            $item['kabupaten_id'] = $value->getBerkas->kabupaten_id;
-            $item['kecamatan_id'] = $value->getBerkas->kecamatan_id;
-            $item['desa_id'] = $value->getBerkas->desa_id;
+                $item['id'] = $value->berkas_id;
+                $item['nama_pemohon'] = $value->getBerkas->nama_pemohon;
+                $item['nomor_hak'] = $value->getBerkas->nomor_hak;
+                $item['kabupaten_id'] = $value->getBerkas->kabupaten_id;
+                $item['kecamatan_id'] = $value->getBerkas->kecamatan_id;
+                $item['desa_id'] = $value->getBerkas->desa_id;
 
-            // $item['petugas_ukur_id'] = $history->getUser->name;
+                // $item['petugas_ukur_id'] = $history->getUser->name;
 
-            $item['alamat'] = $value->getBerkas->alamat;
-            $item['catatan'] = $value->getBerkas->catatan;
-            $item['tanggal_pengukuran'] = $result_date;
-            $item['kuasa_berkas'] = $value->getBerkas->kuasa_berkas;
-            $item['no_hp_kuasa'] = $value->getBerkas->no_hp_kuasa;
-            $item['biaya_taktis'] = $value->getBerkas->biaya_taktis;
-            $item['biaya_proses'] = $value->getBerkas->biaya_proses;
-            $item['status_proses'] = $value->getBerkas->status_proses;
+                $item['alamat'] = $value->getBerkas->alamat;
+                $item['catatan'] = $value->getBerkas->catatan;
+                $item['tanggal_pengukuran'] = $result_date;
+                $item['kuasa_berkas'] = $value->getBerkas->kuasa_berkas;
+                $item['no_hp_kuasa'] = $value->getBerkas->no_hp_kuasa;
+                $item['biaya_taktis'] = $value->getBerkas->biaya_taktis;
+                $item['biaya_proses'] = $value->getBerkas->biaya_proses;
+                $item['status_proses'] = $value->getBerkas->status_proses;
 
-            if ($request->exists('filterData')) {
-                if ($request->filterData == 'jatuh-tempo' && $result_date <= 0) {
-                    array_push($json, $item);
-                } 
-                
-                if ($request->filterData == 'proses') {
+                if ($request->exists('filterData')) {
+                    if ($request->filterData == 'jatuh-tempo' && $result_date <= 0) {
+                        array_push($json, $item);
+                    } 
+                    
+                    if ($request->filterData == 'proses') {
+                        array_push($json, $item);
+                    }
+                } else {
                     array_push($json, $item);
                 }
-            } else {
-                array_push($json, $item);
             }
+            
         }
 
         return response()->json($json, 200);

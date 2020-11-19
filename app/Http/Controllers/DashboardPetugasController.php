@@ -28,35 +28,36 @@ class DashboardPetugasController extends Controller
 
         foreach ($berkas as $value) {
 
-            //  Manipulasi Tanggal
-            $start_date = \Carbon\Carbon::now();
-            $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran);
-            $result_date = $start_date->diffInDays($expired_date, false);
-            // dd($result_date);
-            
-            // Kalkulasi Jatuh Tempo
-            if ($value->status_proses == 'batal') {
-                $batal++;
-            } else {
-                if ($value->status_proses == 'proses' && $result_date <= 0) {
-                    $jatuhTempo++;
+            if ($value->getBerkas != null) {
+                //  Manipulasi Tanggal
+                $start_date = \Carbon\Carbon::now();
+                $expired_date = \Carbon\Carbon::parse($value->tanggal_pengukuran);
+                $result_date = $start_date->diffInDays($expired_date, false);
+                // dd($result_date);
+                
+                // Kalkulasi Jatuh Tempo
+                if ($value->status_proses == 'batal') {
+                    $batal++;
+                } else {
+                    if ($value->status_proses == 'proses' && $result_date <= 0) {
+                        $jatuhTempo++;
+                    }
+                }
+
+                // Kalkulasi Proses dan Selesai
+                if ($value->status_proses == 'proses') {
+                    $proses++; 
+                }else if ($value->status_proses == 'selesai') {
+                    $selesai++;
+                }
+
+                // Kalkulasi Kuasa PPAT dan Masyarakat
+                if ($value->getBerkas->kuasa_berkas == 'ppat') {
+                    $kuasaPpat++;
+                }else if ($value->getBerkas->kuasa_berkas == 'masyarakat') {
+                    $kuasaMasyarakat++;
                 }
             }
-
-            // Kalkulasi Proses dan Selesai
-            if ($value->status_proses == 'proses') {
-                $proses++; 
-            }else if ($value->status_proses == 'selesai') {
-                $selesai++;
-            }
-
-            // Kalkulasi Kuasa PPAT dan Masyarakat
-            if ($value->getBerkas->kuasa_berkas == 'ppat') {
-                $kuasaPpat++;
-            }else if ($value->getBerkas->kuasa_berkas == 'masyarakat') {
-                $kuasaMasyarakat++;
-            }
-
         }
 
         // Inisialisasi data
