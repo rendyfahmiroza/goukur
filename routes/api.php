@@ -90,3 +90,7 @@ Route::put('change-pass','UserController@change_pass')->name('user.change_pass')
 
 // Robot
 Route::get('tertunda','RobotController@tertunda')->name('robot.tertunda');
+
+// Regency
+Route::get('regency/{id}','RegencyController@regency')->name('regency.regency');
+Route::get('districs/{id}','RegencyController@districs')->name('regency.districs');

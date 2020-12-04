@@ -3578,9 +3578,9 @@ __webpack_require__.r(__webpack_exports__);
     getKecamatan: function getKecamatan() {
       var _this4 = this;
 
-      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten).then(function (response) {
+      axios.get('/regency/' + this.selectedKabupaten).then(function (response) {
         console.log();
-        _this4.itemsKecamatan = response.data.kecamatan;
+        _this4.itemsKecamatan = response.data;
       }); // Call petugas
 
       this.getPetugas();
@@ -3592,9 +3592,9 @@ __webpack_require__.r(__webpack_exports__);
     getDesa: function getDesa() {
       var _this5 = this;
 
-      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan).then(function (response) {
-        console.log();
-        _this5.itemsDesa = response.data.kelurahan;
+      axios.get('/districs/' + this.selectedKecamatan).then(function (response) {
+        console.log(response);
+        _this5.itemsDesa = response.data;
       });
     },
     postData: function postData() {
@@ -68437,7 +68437,7 @@ var render = function() {
                               return _c(
                                 "option",
                                 { key: i, domProps: { value: item.id } },
-                                [_vm._v(_vm._s(item.nama))]
+                                [_vm._v(_vm._s(item.name))]
                               )
                             })
                           ],
@@ -68496,7 +68496,7 @@ var render = function() {
                               return _c(
                                 "option",
                                 { key: i, domProps: { value: item.id } },
-                                [_vm._v(_vm._s(item.nama))]
+                                [_vm._v(_vm._s(item.name))]
                               )
                             })
                           ],

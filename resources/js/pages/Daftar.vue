@@ -31,7 +31,7 @@
                                 <label for="email" class="col-form-label s-12">Kecamatan</label>
                                 <select v-model="selectedKecamatan" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref" @change="getDesa">
                                     <option value="" selected>--Pilih--</option>
-                                    <option :value="item.id" v-for="(item, i) in itemsKecamatan" :key="i">{{item.nama}}</option>
+                                    <option :value="item.id" v-for="(item, i) in itemsKecamatan" :key="i">{{item.name}}</option>
                                 </select>
                             </div>
 
@@ -39,7 +39,7 @@
                                 <label for="email" class="col-form-label s-12">Desa</label>
                                 <select v-model="selectedDesa" class="custom-select my-1 mr-sm-2 form-control r-0 light s-12" id="inlineFormCustomSelectPref">
                                     <option value="" selected>--Pilih--</option>
-                                    <option :value="item.id" v-for="(item, i) in itemsDesa" :key="i">{{item.nama}}</option>
+                                    <option :value="item.id" v-for="(item, i) in itemsDesa" :key="i">{{item.name}}</option>
                                 </select>
                             </div>
                         </div>
@@ -174,10 +174,10 @@ export default {
         },
         getKecamatan: function () {
             axios.
-            get('http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten)
+            get('/regency/' + this.selectedKabupaten)
                 .then(response => {
                     console.log()
-                    this.itemsKecamatan = response.data.kecamatan
+                    this.itemsKecamatan = response.data
                 })
             // Call petugas
             this.getPetugas()
@@ -187,10 +187,10 @@ export default {
         },
         getDesa: function () {
             axios.
-            get('http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan)
+            get('/districs/' + this.selectedKecamatan)
                 .then(response => {
-                    console.log()
-                    this.itemsDesa = response.data.kelurahan
+                    console.log(response)
+                    this.itemsDesa = response.data
                 })
         },
         postData: function () {
