@@ -220,14 +220,14 @@ export default {
         },
         getKabupaten: function () {
             axios.
-            get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11')
+            get('http://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11')
                 .then(response => {
                     this.itemsKabupaten = response.data.kota_kabupaten
                 })
         },
         getKecamatan: function () {
             axios.
-            get('https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten)
+            get('http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten)
                 .then(response => {
                     console.log()
                     this.itemsKecamatan = response.data.kecamatan
@@ -240,7 +240,7 @@ export default {
         },
         getDesa: function () {
             axios.
-            get('https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan)
+            get('http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan)
                 .then(response => {
                     console.log()
                     this.itemsDesa = response.data.kelurahan

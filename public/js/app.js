@@ -5918,14 +5918,14 @@ __webpack_require__.r(__webpack_exports__);
     getKabupaten: function getKabupaten() {
       var _this4 = this;
 
-      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11').then(function (response) {
+      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kota?id_provinsi=11').then(function (response) {
         _this4.itemsKabupaten = response.data.kota_kabupaten;
       });
     },
     getKecamatan: function getKecamatan() {
       var _this5 = this;
 
-      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten).then(function (response) {
+      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten).then(function (response) {
         console.log();
         _this5.itemsKecamatan = response.data.kecamatan;
       }); // Call petugas
@@ -5939,7 +5939,7 @@ __webpack_require__.r(__webpack_exports__);
     getDesa: function getDesa() {
       var _this6 = this;
 
-      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan).then(function (response) {
+      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan).then(function (response) {
         console.log();
         _this6.itemsDesa = response.data.kelurahan;
       });
