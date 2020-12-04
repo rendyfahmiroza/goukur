@@ -3578,7 +3578,7 @@ __webpack_require__.r(__webpack_exports__);
     getKecamatan: function getKecamatan() {
       var _this4 = this;
 
-      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten).then(function (response) {
+      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kecamatan?id_kota=' + this.selectedKabupaten).then(function (response) {
         console.log();
         _this4.itemsKecamatan = response.data.kecamatan;
       }); // Call petugas
@@ -3592,7 +3592,7 @@ __webpack_require__.r(__webpack_exports__);
     getDesa: function getDesa() {
       var _this5 = this;
 
-      axios.get('https://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan).then(function (response) {
+      axios.get('http://dev.farizdotid.com/api/daerahindonesia/kelurahan?id_kecamatan=' + this.selectedKecamatan).then(function (response) {
         console.log();
         _this5.itemsDesa = response.data.kelurahan;
       });
