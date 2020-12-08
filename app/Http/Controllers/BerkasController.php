@@ -27,9 +27,17 @@ class BerkasController extends Controller
     public function index(Request $request)
     {
         if ($request->exists('filterData')) {
-            $berkas = Berkas::where('status_proses','=','proses')->get();
+            if (Auth::user()->hak_akses == '1') {
+                $berkas = Berkas::where('status_proses','=','proses')->get();
+            } else {
+                $berkas = Berkas::where('status_proses','=','proses')->where('kabupaten_id', '=', Auth::user()->kantah)->get();
+            }
         } else {
-            $berkas = Berkas::where('status_proses','=','proses')->where('kabupaten_id', '=', Auth::user()->kantah)->get();
+            if (Auth::user()->hak_akses == '1') {
+                $berkas = Berkas::where('status_proses','=','proses')->get();
+            } else {
+                $berkas = Berkas::where('status_proses','=','proses')->where('kabupaten_id', '=', Auth::user()->kantah)->get();
+            }
         }
         
         $json = array();
@@ -779,10 +787,17 @@ class BerkasController extends Controller
      */
     public function count_berkas()
     {
-        $verifikasi = Berkas::where('status_proses','verifikasi')->count();
-        $baru = Berkas::where('status_proses','baru-mandiri')->count();
-        $proses = Berkas::where('status_proses','proses')->count();
-        $tertunda = Berkas::where('status_proses','tertunda')->count();
+        if (Auth::user()->hak_akses == '1') {
+            $verifikasi = Berkas::where('status_proses','verifikasi')->count();
+            $baru = Berkas::where('status_proses','baru-mandiri')->count();
+            $proses = Berkas::where('status_proses','proses')->count();
+            $tertunda = Berkas::where('status_proses','tertunda')->count();
+        } else {
+            $verifikasi = Berkas::where('status_proses','verifikasi')->where('kabupaten_id', '=', Auth::user()->kantah)->count();
+            $baru = Berkas::where('status_proses','baru-mandiri')->where('kabupaten_id', '=', Auth::user()->kantah)->count();
+            $proses = Berkas::where('status_proses','proses')->where('kabupaten_id', '=', Auth::user()->kantah)->count();
+            $tertunda = Berkas::where('status_proses','tertunda')->where('kabupaten_id', '=', Auth::user()->kantah)->count();
+        }
 
         $json = array();
         $json['verifikasi'] = $verifikasi;
