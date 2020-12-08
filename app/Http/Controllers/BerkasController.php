@@ -29,7 +29,7 @@ class BerkasController extends Controller
         if ($request->exists('filterData')) {
             $berkas = Berkas::where('status_proses','=','proses')->get();
         } else {
-            $berkas = Berkas::where('status_proses','=','proses')->get();
+            $berkas = Berkas::where('status_proses','=','proses')->where('kabupaten_id', '=', Auth::user()->kantah)->get();
         }
         
         $json = array();
